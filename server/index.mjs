@@ -109,6 +109,13 @@ app.post('/api/llm/turn', async (req, res) => {
   const reconciled = reconcileWithIntent(sanitized, intent, templateReaction);
   const elapsed = Date.now() - start;
 
+  // Diagnostic logging — visible via `railway logs`
+  const ov = reconciled.overridden;
+  const ovStr = (ov.mood || ov.profit || ov.reply)
+    ? ` [override: ${[ov.mood && 'mood', ov.profit && 'profit', ov.reply && 'reply'].filter(Boolean).join(',')}]`
+    : '';
+  console.log(`[turn] intent=${intent || '?'} llm(${sanitized.mood_change ?? '?'},${sanitized.profit_change ?? '?'}) → final(${reconciled.mood_change},${reconciled.profit_change}) ${elapsed}ms${ovStr}`);
+
   return res.json({
     ok: true,
     mood_change: reconciled.mood_change,
@@ -180,11 +187,12 @@ function buildSystemPrompt(ctx, playerMessage) {
     `รอบที่: ${(ctx.turns ?? 0) + 1}`,
     '',
     '=== กติกาประเมิน ===',
-    '1) mood_change (จำนวนเต็ม -35 ถึง +35)',
+    '1) mood_change (จำนวนเต็ม -35 ถึง +35) — *** ห้ามตอบ 0 ถ้าแอดมินทำอะไรชัดเจน ***',
     `   • ยอม (คืนเงิน/ทำใหม่ฟรี/ส่งของใหม่ฟรี):  ${RULES_BY_INTENT.yield.mood}`,
     `   • เจรจา (ส่วนลด/คูปอง/แถม):              ${RULES_BY_INTENT.negotiate.mood}`,
     `   • ปฏิเสธ (อ้างนโยบาย):                    ${RULES_BY_INTENT.refuse.mood}`,
     `   • ปั่น (โยน/รอ):                          ${RULES_BY_INTENT.deflect.mood}`,
+    `   • ห้ามใส่ 0 เด็ดขาดถ้า intent คือ ยอม/เจรจา/ปฏิเสธ — เลือกค่าในช่วงที่กำหนด`,
     '',
     '2) profit_change (จำนวนเต็ม -45 ถึง 0)  *** ห้ามบวกเด็ดขาด ***',
     `   • ยอม:    ${RULES_BY_INTENT.yield.profit}`,
@@ -262,10 +270,20 @@ function reconcileWithIntent(llmOut, intent, templateReaction) {
   } else if (intent && tplMood !== 0) {
     const tplSign = Math.sign(tplMood);
     const llmSign = Math.sign(out.mood_change);
+    const llmAbs = Math.abs(out.mood_change);
+    const tplAbs = Math.abs(tplMood);
+
     if (tplSign !== 0 && llmSign !== 0 && tplSign !== llmSign) {
+      // Sign disagreement → override to template
       out.mood_change = tplMood;
       out.overridden.mood = true;
+    } else if (llmAbs < tplAbs / 2) {
+      // LLM was timid — produced ~0 when template wants a real move.
+      // Pull halfway toward template so the player sees their work pay off.
+      out.mood_change = Math.round((out.mood_change + tplMood) / 2);
+      out.overridden.mood = true;
     } else if (Math.abs(out.mood_change - tplMood) > 20) {
+      // LLM was way overboard in same direction — average
       out.mood_change = Math.round((out.mood_change + tplMood) / 2);
       out.overridden.mood = true;
     }
