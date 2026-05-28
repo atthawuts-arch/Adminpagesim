@@ -1,0 +1,72 @@
+[
+  {
+    "id": "drama",
+    "name": "สายดราม่า",
+    "icon": "😭",
+    "avatar_emoji": "🥺",
+    "starting_mood": 25,
+    "tone_description": "ใช้อิโมจิ 😭💔 เยอะ พิมพ์ลากเสียง (ค่าาา) พูดถึงความเป็นแฟนคลับ",
+    "name_examples": ["น้องนุ่น", "น้องเมย์", "หนูแอม", "น้องบีม", "น้องเฟิร์น", "น้องมุก", "น้องเฟย์"],
+    "reaction_multipliers": { "yield": 1.2, "negotiate": 1.0, "refuse": 1.5, "deflect": 0.8 }
+  },
+  {
+    "id": "threat",
+    "name": "สายขู่",
+    "icon": "😠",
+    "avatar_emoji": "😤",
+    "starting_mood": 18,
+    "tone_description": "เสียงดุ ใช้คำขู่ ขู่ลงรีวิว/พันทิป ขู่ลงเพจกลุ่ม น้ำเสียงทางการแต่กดดัน",
+    "name_examples": ["คุณดิฉัน", "คุณมิ้น", "คุณตา", "คุณบีม", "คุณตั้ม", "คุณเต้", "คุณนิด"],
+    "reaction_multipliers": { "yield": 1.0, "negotiate": 1.1, "refuse": 1.6, "deflect": 0.7 }
+  },
+  {
+    "id": "noread",
+    "name": "สายไม่อ่าน",
+    "icon": "🙄",
+    "avatar_emoji": "🙄",
+    "starting_mood": 35,
+    "tone_description": "ถามซ้ำเรื่องที่ตอบไปแล้ว ไม่จำลายละเอียด เหมือนไม่ได้อ่านอะไรเลย",
+    "name_examples": ["น้องเมย์", "น้องเก่ง", "น้องเอ๋", "น้องป๋อ", "น้องเอ", "น้องเอม"],
+    "reaction_multipliers": { "yield": 1.0, "negotiate": 0.9, "refuse": 0.8, "deflect": 0.6 }
+  },
+  {
+    "id": "compare",
+    "name": "สายเปรียบเทียบ",
+    "icon": "🆚",
+    "avatar_emoji": "🤨",
+    "starting_mood": 28,
+    "tone_description": "เปรียบเทียบกับ 'ร้านอื่น' ตลอดเวลา ว่าทำได้ ทำดีกว่า ทำไมร้านนี้ทำไม่ได้",
+    "name_examples": ["หนูแอม", "หนูปาล์ม", "หนูแพร", "หนูจ๋า", "หนูฝน", "หนูแก้ม"],
+    "reaction_multipliers": { "yield": 0.9, "negotiate": 0.8, "refuse": 1.4, "deflect": 0.8 }
+  },
+  {
+    "id": "discount",
+    "name": "สายขอลด",
+    "icon": "🥺",
+    "avatar_emoji": "🥺",
+    "starting_mood": 40,
+    "tone_description": "อ้อน งอน อ้างจน นักศึกษา ขอลดเล็กน้อย น่ารักแต่ฉลาด",
+    "name_examples": ["น้องเฟิร์น", "น้องอาย", "น้องโบว์", "น้องเก๋", "น้องเล็ก", "น้องโบ"],
+    "reaction_multipliers": { "yield": 1.1, "negotiate": 0.9, "refuse": 1.2, "deflect": 0.5 }
+  },
+  {
+    "id": "accuse",
+    "name": "สายตำหนิ",
+    "icon": "🤨",
+    "avatar_emoji": "😒",
+    "starting_mood": 20,
+    "tone_description": "ตั้งคำถามเชิงกล่าวหา 'เปิดร้านยังไง' 'ทำธุรกิจเป็นมั้ย' กดดันแอดมิน",
+    "name_examples": ["คุณกานต์", "คุณวุ้น", "คุณนิด", "คุณนุ้ย", "คุณเอ๋", "คุณจิ๋ม"],
+    "reaction_multipliers": { "yield": 0.9, "negotiate": 0.8, "refuse": 1.7, "deflect": 1.2 }
+  },
+  {
+    "id": "flip",
+    "name": "สายพลิก",
+    "icon": "😈",
+    "avatar_emoji": "💕",
+    "starting_mood": 50,
+    "tone_description": "เริ่มหวาน ใช้อิโมจิ 💕 น่ารัก แต่พอโดนปฏิเสธจะพลิกโกรธทันที ใช้ MANAGER",
+    "name_examples": ["น้องพิม", "น้องเจน", "น้องอุ๊", "น้องอ้อม", "น้องดี", "น้องแพร", "น้องเปิ้ล"],
+    "reaction_multipliers": { "yield": 1.0, "negotiate": 1.0, "refuse": 3.0, "deflect": 1.0 }
+  }
+]

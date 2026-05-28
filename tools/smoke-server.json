@@ -1,0 +1,22 @@
+{
+  "ctx": {
+    "shop_name": "Glow Up Cream",
+    "category": "ครีม",
+    "complaint": "ใช้ครีม 3 วันแล้วยังไม่ขาว ขอเงินคืน",
+    "policy": "ครีมต้องใช้ต่อเนื่อง 4-6 สัปดาห์ ไม่รับคืนสินค้าที่เปิดใช้แล้ว",
+    "context_for_llm": "ร้านขายครีมหน้าขาว ระบุบนหน้าเพจว่าต้องใช้ 4-6 สัปดาห์",
+    "customer_type_name": "ดราม่า",
+    "tone_description": "ใช้อิโมจิ 😭💔 เยอะ พิมพ์ลากเสียง อ้างความเป็นแฟนคลับ",
+    "customer_name": "น้องนุ่น",
+    "mood": 25,
+    "profit": 100,
+    "turns": 0
+  },
+  "playerMessage": "ขอโทษด้วยค่ะ เดี๋ยวคืนเงินเต็มจำนวนให้เลยนะคะ 🙏",
+  "intent": "yield",
+  "templateReaction": {
+    "mood_change": 35,
+    "profit_change": -40,
+    "messages": ["พี่ใจดีมากกกก 😭❤️"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "admin-sim",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "src"],
+      "port": 8765
+    },
+    {
+      "name": "admin-sim-server",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server/index.mjs"],
+      "port": 4002,
+      "env": {
+        "PORT": "4002",
+        "TYPHOON_API_KEY": "dummy-for-local-ollama",
+        "TYPHOON_API_BASE": "http://127.0.0.1:11434/v1",
+        "TYPHOON_MODEL": "scb10x/llama3.1-typhoon2-8b-instruct"
+      }
+    }
+  ]
+}

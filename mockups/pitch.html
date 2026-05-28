@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แอดมินซิม — Team Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700&family=Bai+Jamjuree:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg-lighter: #131829;
+  --ink: #f3f4f6;
+  --ink-dim: #9ca3af;
+  --ink-soft: #d1d5db;
+  --accent: #ff9f1c;
+  --accent-2: #ff4d6d;
+  --accent-3: #ffd60a;
+  --blue: #0084FF;
+  --blue-grad-1: #0099FF;
+  --blue-grad-2: #0066CC;
+  --green: #31a24c;
+  --red: #fa383e;
+  --purple: #9b59b6;
+  --grey-bubble: #E4E6EB;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Sarabun', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255,77,109,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(255,159,28,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0,132,255,0.05) 0%, transparent 70%),
+    var(--bg);
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Slide container */
+.deck {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 60px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(20px);
+  overflow-y: auto;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.slide-inner {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 100;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--ink);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Kanit', sans-serif;
+}
+
+.nav button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+.nav .counter {
+  font-family: 'Kanit', sans-serif;
+  font-size: 13px;
+  color: var(--ink-dim);
+  font-weight: 600;
+  letter-spacing: 1px;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* Progress bar */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--accent-3));
+  z-index: 100;
+  transition: width 0.4s ease;
+}
+
+/* === TYPOGRAPHY === */
+.kanit { font-family: 'Kanit', sans-serif; }
+.jamj { font-family: 'Bai Jamjuree', sans-serif; }
+
+.eyebrow {
+  font-family: 'Kanit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,159,28,0.4);
+  border-radius: 20px;
+  background: rgba(255,159,28,0.08);
+}
+
+h1.hero {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 900;
+  font-size: clamp(64px, 11vw, 160px);
+  line-height: 0.95;
+  letter-spacing: -3px;
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff9f1c 50%, #ffd60a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+h2.title {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+h3.subtitle {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.3;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+
+p.lead {
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+
+.dim { color: var(--ink-dim); }
+.accent { color: var(--accent); }
+.accent-2 { color: var(--accent-2); }
+.accent-3 { color: var(--accent-3); }
+
+/* === SLIDE 1: TITLE === */
+.s-title {
+  text-align: center;
+}
+
+.s-title .pill {
+  display: inline-block;
+  background: var(--bg-lighter);
+  color: var(--accent);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(255,159,28,0.3);
+  text-transform: uppercase;
+}
+
+.s-title .tagline {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: var(--ink-soft);
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.s-title .meta {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.s-title .meta-item {
+  font-family: 'Kanit', sans-serif;
+  font-size: 13px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+
+.s-title .meta-item strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+/* === SLIDE 2: CONCEPT === */
+.s-concept {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.s-concept .right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.meter-card {
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.2s;
+}
+
+.meter-card:hover { transform: translateX(6px); }
+
+.meter-card .icon {
+  font-size: 28px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.meter-card.timer .icon { background: rgba(255,159,28,0.15); }
+.meter-card.mood .icon { background: rgba(250,56,62,0.15); }
+.meter-card.profit .icon { background: rgba(49,162,76,0.15); }
+.meter-card.score .icon { background: rgba(255,214,10,0.15); }
+
+.meter-card .text { flex: 1; }
+.meter-card .name {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.meter-card .desc {
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.4;
+}
+
+/* === SLIDE 3: COMBOS === */
+.s-combos {
+  text-align: center;
+}
+
+.combo-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  gap: 8px;
+  max-width: 900px;
+  margin: 40px auto 30px;
+}
+
+.combo-cell {
+  aspect-ratio: 1;
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(18px, 2vw, 28px);
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.combo-cell:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+  z-index: 10;
+}
+
+.combo-cell.header {
+  background: transparent;
+  border: none;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-align: center;
+  line-height: 1.1;
+  padding: 4px;
+}
+
+.combo-cell.header-y {
+  text-align: right;
+  justify-content: flex-end;
+  padding-right: 8px;
+}
+
+.combo-cell.highlight {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(255,159,28,0.5);
+  transform: scale(1.1);
+  z-index: 5;
+}
+
+.combo-total {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent), var(--accent-3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 20px;
+  line-height: 1;
+}
+
+/* === SLIDE 4: DEMO INTRO === */
+.s-intro-demo {
+  text-align: center;
+}
+
+.intro-combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+  background: var(--bg-lighter);
+  padding: 30px 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin: 30px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.intro-piece {
+  text-align: center;
+}
+
+.intro-piece .ico {
+  font-size: 64px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.intro-piece .lbl {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.intro-piece .nm {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.intro-x {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: 48px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* === PLAYTHROUGH SLIDES === */
+.s-play {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .s-play {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.play-phone {
+  background: #000;
+  border-radius: 32px;
+  padding: 7px;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.play-screen {
+  background: white;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* mini-HUD inside phone */
+.mini-hud {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 14px 12px 10px;
+}
+
+.mini-hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.mini-shop {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mini-tag {
+  background: rgba(255,77,109,0.2);
+  color: #ff6b8a;
+  border: 1px solid rgba(255,77,109,0.4);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.mini-hud-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.mini-timer {
+  font-family: 'Kanit', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.mini-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-meter {
+  font-family: 'Kanit', sans-serif;
+  font-size: 9px;
+}
+
+.mini-meter-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.mini-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mini-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.mini-fill.mood-low { background: linear-gradient(90deg, #fa383e, #ff9f1c); }
+.mini-fill.mood-mid { background: linear-gradient(90deg, #ff9f1c, #ffd60a); }
+.mini-fill.mood-hi { background: linear-gradient(90deg, #ffd60a, #31a24c); }
+.mini-fill.profit { background: linear-gradient(90deg, #31a24c, #5dd968); }
+.mini-fill.score { background: linear-gradient(90deg, #ffd60a, #ff9f1c); }
+
+/* mini FB header */
+.mini-fb {
+  background: white;
+  padding: 8px 12px;
+  border-bottom: 1px solid #DCDFE4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mini-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffafcc, #ff6b9d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  position: relative;
+}
+
+.mini-avatar::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  background: #31a24c;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.mini-name {
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #050505;
+}
+
+.mini-status {
+  font-size: 9px;
+  color: #65676B;
+}
+
+/* mini chat */
+.mini-chat {
+  background: white;
+  height: 280px;
+  padding: 10px 8px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  scroll-behavior: smooth;
+}
+
+.mini-chat::-webkit-scrollbar { width: 0; }
+
+.mini-msg {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  align-items: flex-end;
+}
+
+.mini-msg.out { justify-content: flex-end; }
+
+.mini-msg-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffafcc, #ff6b9d);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mini-bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 78%;
+}
+
+.mini-bubble {
+  padding: 7px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  line-height: 1.35;
+  word-wrap: break-word;
+}
+
+.mini-bubble.in {
+  background: #E4E6EB;
+  color: #050505;
+}
+
+.mini-bubble.out {
+  background: linear-gradient(135deg, #0099FF, #0066CC);
+  color: white;
+}
+
+.mini-bubble.in + .mini-bubble.in { border-top-left-radius: 4px; }
+.mini-bubble.in:not(:last-child) { border-bottom-left-radius: 4px; }
+
+/* highlight latest message */
+.mini-msg.new .mini-bubble {
+  animation: pop 0.4s ease-out;
+  box-shadow: 0 0 0 3px rgba(255,159,28,0.3);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* response options preview */
+.mini-options {
+  background: #f7f8fa;
+  border-top: 1px solid #DCDFE4;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-opt {
+  background: white;
+  border: 1px solid #DCDFE4;
+  border-radius: 10px;
+  padding: 7px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 11px;
+  color: #050505;
+  overflow: hidden;
+}
+
+.mini-opt::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+}
+
+.mini-opt.yield::before { background: #31a24c; }
+.mini-opt.neg::before { background: #0084FF; }
+.mini-opt.ref::before { background: #ff9f1c; }
+.mini-opt.def::before { background: #9b59b6; }
+
+.mini-opt.chosen {
+  background: #fff7e6;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255,159,28,0.4);
+}
+
+.mini-opt-text { flex: 1; padding-left: 6px; }
+
+.mini-opt-fx {
+  font-family: 'Kanit', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.fx-g { color: #31a24c; }
+.fx-r { color: #fa383e; }
+.fx-d { color: #65676B; }
+
+/* === Annotation panel === */
+.play-info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.turn-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.turn-marker .num {
+  background: var(--accent);
+  color: #000;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.turn-marker .lbl {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 600;
+}
+
+.turn-title {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.turn-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.delta-box {
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.delta-box .h {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.delta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Kanit', sans-serif;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.delta-row .l { color: var(--ink-soft); }
+.delta-row .v { font-weight: 700; font-variant-numeric: tabular-nums; }
+.delta-row .v.up { color: #31a24c; }
+.delta-row .v.down { color: #fa383e; }
+.delta-row .v.neu { color: var(--ink-dim); }
+
+/* === WIN slide === */
+.s-win { text-align: center; }
+
+.win-burst {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(70px, 12vw, 140px);
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffd60a, #ff9f1c, #ff4d6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -3px;
+  margin-bottom: 12px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.win-final {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: clamp(80px, 14vw, 170px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -4px;
+  margin: 30px 0 12px;
+}
+
+.win-label {
+  font-family: 'Kanit', sans-serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.score-formula {
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 18px 24px;
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: var(--ink-soft);
+  margin: 30px auto;
+  max-width: 600px;
+  letter-spacing: 0.5px;
+}
+
+.score-formula .op { color: var(--accent); margin: 0 8px; }
+.score-formula .val { color: var(--ink); font-weight: 600; }
+
+.win-rank {
+  display: inline-block;
+  font-family: 'Kanit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  background: rgba(255,214,10,0.12);
+  color: var(--accent-3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,214,10,0.3);
+  margin-top: 12px;
+  letter-spacing: 2px;
+}
+
+/* === ROADMAP === */
+.s-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.s-roadmap .head {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 800px) {
+  .phases { grid-template-columns: 1fr; }
+}
+
+.phase {
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 26px 22px;
+  position: relative;
+}
+
+.phase .ph-num {
+  position: absolute;
+  top: -16px;
+  left: 22px;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: white;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+}
+
+.phase .ph-title {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.phase .ph-sub {
+  font-family: 'Kanit', sans-serif;
+  font-size: 12px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.phase ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.phase li {
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.phase li::before {
+  content: '○';
+  position: absolute;
+  left: 0;
+  color: var(--ink-dim);
+}
+
+.phase li.done::before { content: '●'; color: #31a24c; }
+
+/* === END slide === */
+.s-end { text-align: center; }
+
+.s-end .big-q {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(54px, 9vw, 110px);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 18px;
+  letter-spacing: -2px;
+}
+
+.s-end .ask {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 30px;
+}
+
+.next-steps {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--bg-lighter);
+  padding: 22px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-top: 20px;
+}
+
+.next-steps .h {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.next-steps li {
+  list-style: none;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.next-steps li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Keyboard hint */
+.kbd-hint {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+  opacity: 0.6;
+  z-index: 100;
+}
+
+.kbd {
+  display: inline-block;
+  background: var(--bg-lighter);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-bottom-width: 2px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .kbd-hint { display: none; }
+  .slide { padding: 30px 20px 100px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ========== SLIDE 1: TITLE ========== -->
+  <section class="slide active s-title">
+    <div class="slide-inner">
+      <div class="pill">Game Pitch · Internal Demo</div>
+      <h1 class="hero">แอดมินซิม</h1>
+      <div class="tagline">Admin Simulator</div>
+      <div class="tagline" style="font-size: clamp(14px, 1.8vw, 18px); margin-top: 8px; color: var(--ink-dim);">
+        เกมจำลอง 3 นาที — ลูกค้าเอาใจยาก × แอดมินมือใหม่
+      </div>
+      <div class="meta">
+        <div class="meta-item">📅 <strong>May 2026</strong></div>
+        <div class="meta-item">🎮 <strong>Desktop · Web Tech</strong></div>
+        <div class="meta-item">🇹🇭 <strong>Thai-first</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 2: CONCEPT ========== -->
+  <section class="slide s-concept">
+    <div class="slide-inner" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;">
+      <div>
+        <div class="eyebrow">The Concept</div>
+        <h2 class="title">เป็นแอดมินเพจ<br>ใน 3 นาที</h2>
+        <p class="lead">
+          ผู้เล่นรับบทแอดมิน เผชิญลูกค้าหัวร้อน 1 คน ต้องเจรจาให้
+          <span class="accent">มู้ดลูกค้าสูง</span> ขณะ
+          <span class="accent">รักษากำไรร้าน</span> ภายในเวลาจำกัด
+        </p>
+        <p class="lead dim">
+          เกม session-based — เล่นจบใน 3 นาที เล่นใหม่ได้เรื่อยๆ
+          เพราะสถานการณ์สุ่มไม่ซ้ำ
+        </p>
+      </div>
+      <div class="right">
+        <div class="meter-card timer">
+          <div class="icon">⏱</div>
+          <div class="text">
+            <div class="name">Timer · 3 นาที</div>
+            <div class="desc">เริ่มที่ 3:00 — หมดเวลา = TIMEOUT</div>
+          </div>
+        </div>
+        <div class="meter-card mood">
+          <div class="icon">😡</div>
+          <div class="text">
+            <div class="name">มู้ดลูกค้า · 0-100</div>
+            <div class="desc">เริ่มต่ำ — ต้องไต่ขึ้นถึง 80 = WIN</div>
+          </div>
+        </div>
+        <div class="meter-card profit">
+          <div class="icon">💰</div>
+          <div class="text">
+            <div class="name">กำไรร้าน · 0-100</div>
+            <div class="desc">ยอมเยอะ = กำไรลด ต้องบาลานซ์</div>
+          </div>
+        </div>
+        <div class="meter-card score">
+          <div class="icon">🏆</div>
+          <div class="text">
+            <div class="name">Score</div>
+            <div class="desc">มู้ด × กำไร × เวลาที่เหลือ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 3: 49 COMBOS ========== -->
+  <section class="slide s-combos">
+    <div class="slide-inner">
+      <div class="eyebrow">Replay Value</div>
+      <h2 class="title">7 ร้าน <span class="accent-2">×</span> 7 สายลูกค้า</h2>
+      <p class="lead dim" style="margin: 0 auto;">สุ่มทุกเกม — เล่น 49 ครั้งไม่ซ้ำคอมโบ</p>
+      
+      <div class="combo-grid">
+        <div class="combo-cell header"></div>
+        <div class="combo-cell header">😭<br>ดราม่า</div>
+        <div class="combo-cell header">😠<br>ขู่</div>
+        <div class="combo-cell header">🙄<br>ไม่อ่าน</div>
+        <div class="combo-cell header">🆚<br>เทียบ</div>
+        <div class="combo-cell header">🥺<br>ขอลด</div>
+        <div class="combo-cell header">🤨<br>ตำหนิ</div>
+        <div class="combo-cell header">😈<br>พลิก</div>
+
+        <div class="combo-cell header header-y">👗 เสื้อผ้า</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">🍱 อาหาร</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">💄 ครีม</div>
+        <div class="combo-cell highlight" title="วันนี้เราจะเล่นคอมโบนี้">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">✏️ พิมพ์ชื่อ</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">🌱 ต้นไม้</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">📦 พรีออเดอร์</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+
+        <div class="combo-cell header header-y">🛍️ มือสอง</div>
+        <div class="combo-cell">😭</div>
+        <div class="combo-cell">😠</div>
+        <div class="combo-cell">🙄</div>
+        <div class="combo-cell">🆚</div>
+        <div class="combo-cell">🥺</div>
+        <div class="combo-cell">🤨</div>
+        <div class="combo-cell">😈</div>
+      </div>
+
+      <div class="combo-total">49</div>
+      <div style="font-family: 'Kanit'; font-size: 13px; letter-spacing: 3px; color: var(--ink-dim); text-transform: uppercase;">Unique Combos</div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 4: DEMO INTRO ========== -->
+  <section class="slide s-intro-demo">
+    <div class="slide-inner">
+      <div class="eyebrow">Let's Play One Round</div>
+      <h2 class="title">วันนี้สุ่มได้...</h2>
+      
+      <div class="intro-combo">
+        <div class="intro-piece">
+          <span class="ico">💄</span>
+          <div class="lbl">Situation</div>
+          <div class="nm">Glow Up Cream</div>
+          <div style="font-size: 12px; color: var(--ink-dim); margin-top: 4px;">ใช้ครีมไม่ขาวขอเงินคืน</div>
+        </div>
+        <div class="intro-x">×</div>
+        <div class="intro-piece">
+          <span class="ico">😭</span>
+          <div class="lbl">Customer Type</div>
+          <div class="nm">สายดราม่า</div>
+          <div style="font-size: 12px; color: var(--ink-dim); margin-top: 4px;">น้องนุ่น — emoji เยอะ ลากเสียง</div>
+        </div>
+      </div>
+
+      <p class="lead" style="margin: 30px auto 0;">
+        เริ่มต้น: <span class="accent">มู้ด 25 / 100</span> · กำไร 100 · เวลา 3:00
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 5: TURN 1 ========== -->
+  <section class="slide s-play">
+    <div class="slide-inner" style="display: grid; grid-template-columns: 360px 1fr; gap: 48px; align-items: center;">
+      
+      <!-- Phone with state at turn 1 -->
+      <div class="play-phone">
+        <div class="play-screen">
+          <div class="mini-hud">
+            <div class="mini-hud-top">
+              <div class="mini-shop">📦 Glow Up Cream</div>
+              <div class="mini-tag">😭 สายดราม่า</div>
+            </div>
+            <div class="mini-hud-row">
+              <div class="mini-timer">3:00</div>
+              <div class="mini-meters">
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>😡 มู้ด</span><span>25</span></div>
+                  <div class="mini-bar"><div class="mini-fill mood-low" style="width:25%"></div></div>
+                </div>
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>💰 กำไร</span><span>100</span></div>
+                  <div class="mini-bar"><div class="mini-fill profit" style="width:100%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-fb">
+            <div class="mini-avatar">🥺</div>
+            <div>
+              <div class="mini-name">น้องนุ่น ค่ะะ 🎀</div>
+              <div class="mini-status">กำลังใช้งานอยู่</div>
+            </div>
+          </div>
+
+          <div class="mini-chat">
+            <div class="mini-msg new">
+              <div class="mini-msg-avatar">🥺</div>
+              <div class="mini-bubbles">
+                <div class="mini-bubble in">พี่ค่าาาาา 😭😭😭</div>
+                <div class="mini-bubble in">หนูใช้ครีม 3 วันแล้วไม่ขาวขึ้นเลยค่ะ</div>
+                <div class="mini-bubble in">หน้ายังดำเหมือนเดิม ผิดหวังมากกก 💔</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-options">
+            <div class="mini-opt yield">
+              <span class="mini-opt-text">"คืนเงินเต็มจำนวนค่ะ 🙏"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+30</span>
+                <span class="fx-r">💰−40</span>
+              </span>
+            </div>
+            <div class="mini-opt neg">
+              <span class="mini-opt-text">"ครีมต้องใช้ 4-6 สัปดาห์ค่ะ + คู่มือ ✨"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+15</span>
+                <span class="fx-d">💰 0</span>
+              </span>
+            </div>
+            <div class="mini-opt ref">
+              <span class="mini-opt-text">"ขออภัย ไม่รับคืนสินค้าเปิดแล้ว"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-r">😊−10</span>
+                <span class="fx-d">💰 0</span>
+              </span>
+            </div>
+            <div class="mini-opt def">
+              <span class="mini-opt-text">"เดี๋ยวแจ้งหัวหน้านะคะ 🙏"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-d">😊 0</span>
+                <span class="fx-d">⏱ +15s</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annotation -->
+      <div class="play-info">
+        <div class="turn-marker">
+          <div class="num">1</div>
+          <div class="lbl">Turn 1 of 5</div>
+        </div>
+        <h3 class="turn-title">ลูกค้าทักมาด้วยน้ำตา</h3>
+        <p class="turn-desc">
+          น้องนุ่นเปิดด้วยอิโมจิเศร้า 3 บับเบิ้ลซ้อนๆ — ใช้ครีม 3 วันยังไม่ขาว (ทั้งที่ครีมต้องใช้ 4-6 สัปดาห์)
+        </p>
+        <p class="turn-desc dim">
+          <strong style="color: var(--accent);">🎮 Player Strategy:</strong><br>
+          ปฏิเสธตรงๆ จะเสียมู้ดทันที — เลือก <span class="accent">เจรจา</span> เอา educational angle ก่อน
+          (ครีมต้องใช้นาน + คู่มือฟรี) ไม่เสียกำไรเลย
+        </p>
+        <div class="delta-box">
+          <div class="h">⚡ Effect of Choice</div>
+          <div class="delta-row"><span class="l">😡 มู้ดลูกค้า</span><span class="v up">+15 → 40</span></div>
+          <div class="delta-row"><span class="l">💰 กำไรร้าน</span><span class="v neu">0 → 100</span></div>
+          <div class="delta-row"><span class="l">⏱ เวลา</span><span class="v neu">−20s → 2:40</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 6: TURN 2 ========== -->
+  <section class="slide s-play">
+    <div class="slide-inner" style="display: grid; grid-template-columns: 360px 1fr; gap: 48px; align-items: center;">
+      <div class="play-phone">
+        <div class="play-screen">
+          <div class="mini-hud">
+            <div class="mini-hud-top">
+              <div class="mini-shop">📦 Glow Up Cream</div>
+              <div class="mini-tag">😭 สายดราม่า</div>
+            </div>
+            <div class="mini-hud-row">
+              <div class="mini-timer">2:40</div>
+              <div class="mini-meters">
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>😡 มู้ด</span><span>40</span></div>
+                  <div class="mini-bar"><div class="mini-fill mood-low" style="width:40%"></div></div>
+                </div>
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>💰 กำไร</span><span>100</span></div>
+                  <div class="mini-bar"><div class="mini-fill profit" style="width:100%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-fb">
+            <div class="mini-avatar">🥺</div>
+            <div>
+              <div class="mini-name">น้องนุ่น ค่ะะ 🎀</div>
+              <div class="mini-status">กำลังใช้งานอยู่</div>
+            </div>
+          </div>
+
+          <div class="mini-chat">
+            <div class="mini-msg">
+              <div class="mini-msg-avatar">🥺</div>
+              <div class="mini-bubbles">
+                <div class="mini-bubble in">พี่ค่าาาาา 😭😭</div>
+                <div class="mini-bubble in">ใช้ 3 วันไม่ขาวเลย 💔</div>
+              </div>
+            </div>
+            <div class="mini-msg out">
+              <div class="mini-bubbles">
+                <div class="mini-bubble out">ครีมต้องใช้ต่อเนื่อง 4-6 สัปดาห์ค่ะ + ส่งคู่มือใช้งานให้นะคะ ✨</div>
+              </div>
+            </div>
+            <div class="mini-msg new">
+              <div class="mini-msg-avatar">🥺</div>
+              <div class="mini-bubbles">
+                <div class="mini-bubble in">อืมม... ก็ได้ค่ะ 🥺</div>
+                <div class="mini-bubble in">แต่หนูยังเศร้าอยู่นะคะ 💔</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-options">
+            <div class="mini-opt yield">
+              <span class="mini-opt-text">"คืนเงินค่ะ 🙏"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+30</span>
+                <span class="fx-r">💰−40</span>
+              </span>
+            </div>
+            <div class="mini-opt neg chosen">
+              <span class="mini-opt-text">"แถม mask 5 แผ่นเป็น gift ค่ะ 🎁"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+15</span>
+                <span class="fx-r">💰−5</span>
+              </span>
+            </div>
+            <div class="mini-opt ref">
+              <span class="mini-opt-text">"ขออภัย กรุณาใช้ตามนโยบาย"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-r">😊−10</span>
+                <span class="fx-d">💰 0</span>
+              </span>
+            </div>
+            <div class="mini-opt def">
+              <span class="mini-opt-text">"เดี๋ยวเช็คกับทีมก่อนนะคะ"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-d">😊 0</span>
+                <span class="fx-d">⏱ −5s</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="play-info">
+        <div class="turn-marker">
+          <div class="num">2</div>
+          <div class="lbl">Turn 2 of 5</div>
+        </div>
+        <h3 class="turn-title">"อืมม... แต่หนูยังเศร้า"</h3>
+        <p class="turn-desc">
+          ลูกค้าครึ่งยอมรับ แต่ยังพยายามเล่นบทเศร้าต่อ — ต้องดันมู้ดขึ้นอีก แต่ยังไม่ควรยอมเต็มที่
+        </p>
+        <p class="turn-desc dim">
+          <strong style="color: var(--accent);">🎮 Player Strategy:</strong><br>
+          เพิ่มของแถมมูลค่าต่ำ (mask 5 แผ่น) — ลูกค้ารู้สึกได้ของพิเศษ
+          เสียกำไรนิดเดียว (5 จุด) แต่มู้ดขยับขึ้นอีก
+        </p>
+        <div class="delta-box">
+          <div class="h">⚡ Effect of Choice</div>
+          <div class="delta-row"><span class="l">😡 มู้ดลูกค้า</span><span class="v up">+15 → 55</span></div>
+          <div class="delta-row"><span class="l">💰 กำไรร้าน</span><span class="v down">−5 → 95</span></div>
+          <div class="delta-row"><span class="l">⏱ เวลา</span><span class="v neu">−20s → 2:20</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 7: TURN 3 ========== -->
+  <section class="slide s-play">
+    <div class="slide-inner" style="display: grid; grid-template-columns: 360px 1fr; gap: 48px; align-items: center;">
+      <div class="play-phone">
+        <div class="play-screen">
+          <div class="mini-hud">
+            <div class="mini-hud-top">
+              <div class="mini-shop">📦 Glow Up Cream</div>
+              <div class="mini-tag">😭 สายดราม่า</div>
+            </div>
+            <div class="mini-hud-row">
+              <div class="mini-timer">2:20</div>
+              <div class="mini-meters">
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>😡 มู้ด</span><span>55</span></div>
+                  <div class="mini-bar"><div class="mini-fill mood-mid" style="width:55%"></div></div>
+                </div>
+                <div class="mini-meter">
+                  <div class="mini-meter-label"><span>💰 กำไร</span><span>95</span></div>
+                  <div class="mini-bar"><div class="mini-fill profit" style="width:95%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-fb">
+            <div class="mini-avatar">🥺</div>
+            <div>
+              <div class="mini-name">น้องนุ่น ค่ะะ 🎀</div>
+              <div class="mini-status">กำลังใช้งานอยู่</div>
+            </div>
+          </div>
+
+          <div class="mini-chat">
+            <div class="mini-msg out">
+              <div class="mini-bubbles">
+                <div class="mini-bubble out">แถม mask 5 แผ่นค่ะ 🎁</div>
+              </div>
+            </div>
+            <div class="mini-msg">
+              <div class="mini-msg-avatar">🥺</div>
+              <div class="mini-bubbles">
+                <div class="mini-bubble in">โอเค ค่ะ พี่ใจดี 🥺</div>
+                <div class="mini-bubble in">แต่หนูยังอยากคืนเงินอยู่ดีค่ะ 😭</div>
+              </div>
+            </div>
+            <div class="mini-msg out">
+              <div class="mini-bubbles">
+                <div class="mini-bubble out">เดี๋ยวแจ้งหัวหน้าทีมขอเคสพิเศษให้ก่อนนะคะ รอสักครู่ค่ะ 🙏</div>
+              </div>
+            </div>
+            <div class="mini-msg new">
+              <div class="mini-msg-avatar">🥺</div>
+              <div class="mini-bubbles">
+                <div class="mini-bubble in">ค่ะะ หนูรอนะคะ พี่ๆ 🥺</div>
+                <div class="mini-bubble in">พี่ต้องช่วยหนูนะคะะ 💔</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-options">
+            <div class="mini-opt yield">
+              <span class="mini-opt-text">"ทีมโอเค คืนเต็มจำนวนค่ะ"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+30</span>
+                <span class="fx-r">💰−40</span>
+              </span>
+            </div>
+            <div class="mini-opt neg">
+              <span class="mini-opt-text">"ทีมโอเค voucher 50% ครั้งหน้า + mask box 🎁"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-g">😊+35</span>
+                <span class="fx-r">💰−20</span>
+              </span>
+            </div>
+            <div class="mini-opt ref">
+              <span class="mini-opt-text">"ทีมยืนยันไม่รับคืนค่ะ"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-r">😊−15</span>
+                <span class="fx-d">💰 0</span>
+              </span>
+            </div>
+            <div class="mini-opt def">
+              <span class="mini-opt-text">"ทีมยังประชุมอยู่ค่ะ รอสักครู่"</span>
+              <span class="mini-opt-fx">
+                <span class="fx-r">😊−5</span>
+                <span class="fx-d">💰 0</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="play-info">
+        <div class="turn-marker">
+          <div class="num">3</div>
+          <div class="lbl">Turn 3 of 5 · Decisive Moment</div>
+        </div>
+        <h3 class="turn-title">"พี่ต้องช่วยหนูนะคะ"</h3>
+        <p class="turn-desc">
+          ใช้ <span class="accent">ปั่น</span> ซื้อเวลาในเทิร์นก่อน — ตอนนี้ลูกค้ารอคำตอบจาก "ทีม"
+          ปฏิเสธตรงๆ ตอนนี้จะระเบิด — ต้องปิดเคสด้วย creative offer
+        </p>
+        <p class="turn-desc dim">
+          <strong style="color: var(--accent);">🎮 Player Strategy:</strong><br>
+          เสนอ voucher 50% ครั้งหน้า + mask box แทนการคืนเงิน — ลูกค้ารู้สึก
+          "ได้มากกว่าที่ขอ" แต่ร้านเสียแค่กำไรในอนาคต ไม่เสียเงินจริง
+        </p>
+        <div class="delta-box">
+          <div class="h">⚡ Effect of Choice</div>
+          <div class="delta-row"><span class="l">😡 มู้ดลูกค้า</span><span class="v up">+35 → 90</span></div>
+          <div class="delta-row"><span class="l">💰 กำไรร้าน</span><span class="v down">−20 → 75</span></div>
+          <div class="delta-row"><span class="l">⏱ เวลา</span><span class="v neu">−30s → 1:50</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 8: WIN ========== -->
+  <section class="slide s-win">
+    <div class="slide-inner">
+      <div class="eyebrow" style="color: #31a24c; background: rgba(49,162,76,0.1); border-color: rgba(49,162,76,0.4);">🎉 Case Closed</div>
+      
+      <div class="win-burst">WIN!</div>
+      
+      <div style="font-family: 'Kanit'; font-size: clamp(18px, 2.5vw, 26px); color: var(--ink-soft); margin-bottom: 20px;">
+        ลูกค้า: <span style="color: #fff;">"พี่ใจดีมากกกก 😭❤️ ขอบคุณค่าาาา 🙏"</span>
+      </div>
+
+      <div class="win-label">FINAL SCORE</div>
+      <div class="win-final">1,485</div>
+
+      <div class="score-formula">
+        <span class="val">90</span><span class="op">×</span><span class="val">75</span><span class="op">×</span><span class="val">1.47</span><span style="opacity:0.5"> ÷ 10</span>
+        <div style="font-family: 'Kanit'; font-size: 12px; color: var(--ink-dim); margin-top: 8px; letter-spacing: 2px;">
+          มู้ดสุดท้าย · กำไรเหลือ · โบนัสเวลา
+        </div>
+      </div>
+
+      <div class="win-rank">👑 GOAT แอดมิน · TOP 5%</div>
+
+      <p class="lead dim" style="margin: 30px auto 0;">
+        ปิดเคสได้ใน 1:10 — มู้ด 90, กำไรเหลือ 75 (ไม่คืนเงินจริง แค่ voucher อนาคต)
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 9: ROADMAP ========== -->
+  <section class="slide s-roadmap">
+    <div class="slide-inner">
+      <div class="head">
+        <div class="eyebrow">Build Plan</div>
+        <h2 class="title">Roadmap</h2>
+      </div>
+      
+      <div class="phases">
+        <div class="phase">
+          <div class="ph-num">Phase 1</div>
+          <div class="ph-title">MVP</div>
+          <div class="ph-sub">2-3 สัปดาห์</div>
+          <ul>
+            <li class="done">UI mockup เสร็จแล้ว</li>
+            <li class="done">49 บทสนทนาเขียนเสร็จ</li>
+            <li>Game loop + scoring</li>
+            <li>Choice mode ทำงานได้</li>
+            <li>Electron wrap + .exe</li>
+          </ul>
+        </div>
+        
+        <div class="phase">
+          <div class="ph-num">Phase 2</div>
+          <div class="ph-title">AI Integration</div>
+          <div class="ph-sub">2-3 สัปดาห์</div>
+          <ul>
+            <li>Bundle Ollama portable</li>
+            <li>First-run Typhoon download</li>
+            <li>Normal mode (พิมพ์เอง × 1.5)</li>
+            <li>Hardcore mode (LLM ล้วน)</li>
+            <li>Sound + animations</li>
+          </ul>
+        </div>
+        
+        <div class="phase">
+          <div class="ph-num">Phase 3</div>
+          <div class="ph-title">Polish & Ship</div>
+          <div class="ph-sub">1-2 สัปดาห์</div>
+          <ul>
+            <li>Achievement system</li>
+            <li>High-score local</li>
+            <li>itch.io / GitHub Releases</li>
+            <li>Demo video สำหรับ TikTok</li>
+            <li>Mac/Linux build (optional)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="lead dim" style="text-align: center; margin: 20px auto 0;">
+        💡 ส่ง Phase 1 ออกก่อนเป็น playable demo — เก็บ feedback ก่อนลง LLM
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SLIDE 10: END ========== -->
+  <section class="slide s-end">
+    <div class="slide-inner">
+      <div class="big-q">Q & A</div>
+      <div class="ask">ทีมคิดยังไง?</div>
+      
+      <div class="next-steps">
+        <div class="h">เรื่องที่อยากให้ทีมช่วยตัดสิน</div>
+        <ul>
+          <li>เริ่ม build MVP เลย หรือต้อง iterate dialogue ก่อน?</li>
+          <li>ใครจะรับ Electron packaging?</li>
+          <li>เป้าหมายปล่อยจริง — Steam, itch.io, หรือ TikTok ดีล?</li>
+          <li>Brand: ใช้ชื่อ "แอดมินซิม" หรือเปลี่ยน?</li>
+        </ul>
+      </div>
+
+      <p style="font-family: 'Kanit'; font-size: 14px; color: var(--ink-dim); margin-top: 40px; letter-spacing: 2px;">
+        🙏 ขอบคุณค่าาาา 💕
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button onclick="prev()" aria-label="Previous">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button onclick="next()" aria-label="Next">›</button>
+</div>
+
+<div class="kbd-hint">
+  ใช้ <span class="kbd">←</span> <span class="kbd">→</span> หรือ <span class="kbd">Space</span>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
+const progress = document.getElementById('progress');
+let current = 0;
+
+function show(i) {
+  current = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+  counter.textContent = `${current + 1} / ${slides.length}`;
+  progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+  // Scroll any scrollable chat to bottom on relevant slides
+  const chats = slides[current].querySelectorAll('.mini-chat');
+  chats.forEach(c => c.scrollTop = c.scrollHeight);
+}
+
+function next() { show(current + 1); }
+function prev() { show(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') show(0);
+  if (e.key === 'End') show(slides.length - 1);
+});
+
+// Touch swipe for mobile
+let touchStart = 0;
+document.addEventListener('touchstart', e => touchStart = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const diff = touchStart - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+});
+
+show(0);
+</script>
+</body>
+</html>

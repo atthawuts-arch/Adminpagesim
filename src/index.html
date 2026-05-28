@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แอดมินซิม — Admin Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&family=Sarabun:wght@400;500;600;700&family=Bai+Jamjuree:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div class="float">💬</div>
+<div class="float">😤</div>
+<div class="float">💸</div>
+<div class="float">😭</div>
+<div class="float">🛍️</div>
+<div class="float">⭐</div>
+
+<div class="frame">
+  <div class="screen">
+    <div class="notch"></div>
+
+    <!-- ============ HOME PAGE ============ -->
+    <div class="page active" id="home">
+      <div class="home-top">
+        <div class="home-badge">🇹🇭 Thai Indie Game</div>
+        <div class="home-logo">
+          <span class="chat-ico c1">💬</span>
+          <span class="chat-ico c2">😡</span>
+          <h1>แอดมิน<br>ซิม</h1>
+        </div>
+        <div class="home-sub">Admin Simulator</div>
+        <div class="home-tagline">
+          เอาตัวรอดในฐานะแอดมินเพจ<br>กล่อมลูกค้าหัวร้อนให้ใจเย็นใน 3 นาที 🔥
+        </div>
+      </div>
+
+      <div class="home-mid">
+        <div class="diff-label">เลือกระดับความยาก</div>
+        <div class="diff-row">
+          <button class="diff-btn active" data-diff="easy">
+            <span class="d-ico">😊</span>
+            <div class="d-name">Easy</div>
+            <div class="d-desc">เลือกตอบ · 3:00</div>
+          </button>
+          <button class="diff-btn" data-diff="normal">
+            <span class="d-ico">😏</span>
+            <div class="d-name">Normal</div>
+            <div class="d-desc">พิมพ์ + ปุ่ม ×1.3</div>
+          </button>
+          <button class="diff-btn" data-diff="hardcore">
+            <span class="d-ico">🔥</span>
+            <div class="d-name">Hardcore</div>
+            <div class="d-desc">พิมพ์ล้วน ×1.6</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="home-bottom">
+        <button class="start-btn" id="startBtn">▶ เริ่มเล่น</button>
+        <div class="home-foot">
+          <button id="howToPlayBtn">❔ วิธีเล่น</button>
+          <button id="resetScoreBtn">🗑️ ล้างคะแนน</button>
+        </div>
+        <div class="hi-score" id="hiScore">🏆 ยังไม่มีสถิติ — เล่นเลย!</div>
+        <div class="ai-status" id="aiStatus" title="คลิกเพื่อตรวจอีกครั้ง">📋 กำลังตรวจ AI…</div>
+      </div>
+    </div>
+
+    <!-- ============ GAME PAGE ============ -->
+    <div class="page" id="game">
+      <div class="hud">
+        <div class="hud-top">
+          <div class="shop-badge"><span class="ico" id="shopIco">G</span><span id="shopName">ร้าน —</span></div>
+          <div class="scenario-tag" id="typeTag">🎭 สาย —</div>
+          <div class="ai-pill tpl" id="aiPill">📋 TEMPLATE</div>
+        </div>
+        <div class="hud-main">
+          <div class="timer-box">
+            <div class="timer-label">เวลา</div>
+            <div class="timer" id="timer">3:00</div>
+          </div>
+          <div class="meters">
+            <div class="meter">
+              <div class="meter-label"><span class="name">😡 มู้ดลูกค้า</span><span class="val" id="moodVal">— / 100</span></div>
+              <div class="meter-bar"><div class="meter-fill mood-fill" id="moodBar" style="width:0%"></div></div>
+            </div>
+            <div class="meter">
+              <div class="meter-label"><span class="name">💰 กำไรร้าน</span><span class="val" id="profitVal">100 / 100</span></div>
+              <div class="meter-bar"><div class="meter-fill profit-fill" id="profitBar" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-header">
+        <div class="back" id="backBtn">‹</div>
+        <div class="avatar" id="custAvatar">🥺<div class="active-dot"></div></div>
+        <div class="user-info">
+          <div class="name" id="custName">—</div>
+          <div class="status">กำลังใช้งานอยู่</div>
+        </div>
+        <div class="fb-icons"><span>📞</span><span>📹</span></div>
+      </div>
+
+      <div class="chat" id="chat"></div>
+
+      <div class="responses" id="responses">
+        <div class="resp-header">
+          <span class="label" id="respLabel">เลือกคำตอบ</span>
+          <span class="hint" id="respHint">tap ↓</span>
+        </div>
+
+        <div class="typing-input" id="typingInput">
+          <textarea id="playerInput" rows="2" maxlength="240" placeholder="พิมพ์ตอบลูกค้า... (Enter เพื่อส่ง · Shift+Enter ขึ้นบรรทัด)"></textarea>
+          <button class="send-btn" id="sendBtn" title="ส่ง">➤</button>
+        </div>
+
+        <div class="choice-grid" id="choiceGrid">
+          <button class="btn b1" data-resp="yield">
+            <div class="btn-content"><div class="btn-tag">ยอมทุกอย่าง</div><div class="btn-text" data-line>—</div></div>
+            <div class="btn-fx"><span class="fx-good">😊 +30</span><span class="fx-bad">💰 −40</span></div>
+          </button>
+          <button class="btn b2" data-resp="negotiate">
+            <div class="btn-content"><div class="btn-tag">เจรจาฉลาด</div><div class="btn-text" data-line>—</div></div>
+            <div class="btn-fx"><span class="fx-good">😊 +15</span><span class="fx-bad">💰 −10</span></div>
+          </button>
+          <button class="btn b3" data-resp="refuse">
+            <div class="btn-content"><div class="btn-tag">ปฏิเสธสุภาพ</div><div class="btn-text" data-line>—</div></div>
+            <div class="btn-fx"><span class="fx-bad">😊 −10</span><span class="fx-mid">💰 0</span></div>
+          </button>
+          <button class="btn b4" data-resp="deflect">
+            <div class="btn-content"><div class="btn-tag">ปั่น / โยกย้าย</div><div class="btn-text" data-line>—</div></div>
+            <div class="btn-fx"><span class="fx-mid">😊 0</span><span class="fx-mid">⏱ ซื้อเวลา</span></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RESULTS PAGE ============ -->
+    <div class="page" id="results">
+      <div class="res-top">
+        <div class="res-result" id="resResult">🎉 WIN!</div>
+        <div class="res-sub" id="resSub">ปิดเคสได้สำเร็จ</div>
+      </div>
+
+      <div class="res-score">
+        <div class="res-score-label">FINAL SCORE</div>
+        <div class="res-score-val" id="resScore">0</div>
+        <div class="res-rank" id="resRank">😐 รอด</div>
+      </div>
+
+      <div class="res-breakdown">
+        <div class="brk-row"><span>😡 มู้ดสุดท้าย</span><span class="brk-val" id="brkMood">0 / 100</span></div>
+        <div class="brk-row"><span>💰 กำไรร้าน</span><span class="brk-val" id="brkProfit">0 / 100</span></div>
+        <div class="brk-row"><span>⏱ เวลาที่เหลือ</span><span class="brk-val" id="brkTime">0:00</span></div>
+        <div class="brk-row"><span>🎯 ระดับ × ผล</span><span class="brk-val" id="brkMult">×1.00</span></div>
+        <div class="brk-row brk-best"><span>🏆 สถิติส่วนตัว</span><span class="brk-val" id="brkBest">0</span></div>
+      </div>
+
+      <div class="res-actions">
+        <button class="start-btn" id="playAgainBtn">🔁 เล่นใหม่ (เคสใหม่)</button>
+        <button class="ghost-btn" id="backHomeBtn">← กลับเมนู</button>
+      </div>
+    </div>
+
+    <!-- ============ HOW TO PLAY MODAL ============ -->
+    <div class="modal" id="howModal">
+      <div class="modal-card">
+        <div class="modal-title">📖 วิธีเล่น</div>
+        <ul class="howto-list">
+          <li><b>เป้าหมาย:</b> ดันมู้ดลูกค้าให้ ≥ 80 ภายใน 3 นาที</li>
+          <li><b>โหมด Easy:</b> เลือกคำตอบจาก 4 ปุ่ม</li>
+          <li><b>โหมด Normal:</b> พิมพ์เอง (×1.5) + ปุ่มสำรอง ต้องเปิด Ollama</li>
+          <li><b>โหมด Hardcore:</b> พิมพ์ล้วน × 1.6 — AI ประเมินคุณภาพคำตอบ</li>
+          <li><b>มู้ด ≤ 0:</b> โดน 1 ดาว LOSE (× 0.2)</li>
+          <li><b>หมดเวลา:</b> เคสค้าง TIMEOUT (× 0.6)</li>
+          <li><b>คะแนน:</b> มู้ด × กำไร × เวลาที่เหลือ × ตัวคูณ</li>
+          <li><b>ระวังสายพลิก:</b> ปฏิเสธ → มู้ด −30 ลงเร็วมาก</li>
+        </ul>
+        <button class="ghost-btn" id="closeHowBtn">เข้าใจแล้ว</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="caption" id="caption">เกมจำลองการเป็นแอดมินเพจ · 7 × 7 = 49 คอมโบ</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

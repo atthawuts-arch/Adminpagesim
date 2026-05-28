@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แอดมินซิม — Admin Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&family=Sarabun:wght@400;500;600;700&family=Bai+Jamjuree:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fb-blue: #0084FF;
+  --fb-blue-1: #0099FF;
+  --fb-blue-2: #0066CC;
+  --grey-bubble: #E4E6EB;
+  --ink: #050505;
+  --secondary: #65676B;
+  --border: #DCDFE4;
+  --danger: #FA383E;
+  --warning: #FF9F1C;
+  --success: #31A24C;
+  --gold: #FFD60A;
+  --purple: #9B59B6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, #ffd6a5 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, #ffadad 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #fdffb6 0%, transparent 70%),
+    linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* floating decorations */
+.float {
+  position: fixed;
+  font-size: 48px;
+  opacity: 0.18;
+  z-index: 0;
+  animation: floaty 6s ease-in-out infinite;
+}
+.float:nth-child(1) { top: 8%; left: 6%; animation-delay: 0s; }
+.float:nth-child(2) { top: 14%; right: 8%; animation-delay: 1.2s; }
+.float:nth-child(3) { bottom: 18%; left: 5%; animation-delay: 2.4s; }
+.float:nth-child(4) { bottom: 10%; right: 6%; animation-delay: 3.6s; }
+.float:nth-child(5) { top: 45%; left: 3%; animation-delay: 1.8s; }
+.float:nth-child(6) { top: 50%; right: 3%; animation-delay: 3s; }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-18px) rotate(8deg); }
+}
+
+/* Phone frame */
+.frame {
+  width: 100%;
+  max-width: 390px;
+  background: #000;
+  border-radius: 40px;
+  padding: 8px;
+  box-shadow: 0 30px 70px -10px rgba(0,0,0,0.35), inset 0 0 0 2px #2a2a2a;
+  position: relative;
+  z-index: 1;
+}
+
+.screen {
+  background: #0a0e1a;
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+  height: 760px;
+}
+
+.notch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 90px; height: 22px;
+  background: #000;
+  border-radius: 0 0 14px 14px;
+  z-index: 100;
+}
+
+/* === PAGE SYSTEM === */
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: scale(0.98);
+}
+.page.active { opacity: 1; visibility: visible; transform: scale(1); }
+
+/* ============ HOME PAGE ============ */
+#home {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,77,109,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,159,28,0.2) 0%, transparent 55%),
+    linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 28px 36px;
+  text-align: center;
+}
+
+.home-top { width: 100%; }
+
+.home-badge {
+  display: inline-block;
+  font-family: 'Kanit', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--gold);
+  background: rgba(255,214,10,0.1);
+  border: 1px solid rgba(255,214,10,0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.home-logo {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.home-logo h1 {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff9f1c 50%, #ffd60a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 20px rgba(255,77,109,0.4));
+}
+
+.home-logo .chat-ico {
+  position: absolute;
+  font-size: 40px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.home-logo .chat-ico.c1 { top: -18px; right: 10px; animation: floaty 4s ease-in-out infinite; }
+.home-logo .chat-ico.c2 { bottom: -10px; left: 14px; font-size: 28px; animation: floaty 5s ease-in-out infinite reverse; }
+
+.home-sub {
+  font-family: 'Kanit', sans-serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.home-tagline {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* difficulty selector */
+.home-mid { width: 100%; }
+
+.diff-label {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.diff-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.diff-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Kanit', sans-serif;
+}
+
+.diff-btn .d-ico { font-size: 22px; display: block; margin-bottom: 4px; }
+.diff-btn .d-name { font-size: 13px; font-weight: 700; color: white; }
+.diff-btn .d-desc { font-size: 9px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+.diff-btn.active {
+  background: linear-gradient(135deg, rgba(255,77,109,0.25), rgba(255,159,28,0.25));
+  border-color: var(--warning);
+  box-shadow: 0 0 20px rgba(255,159,28,0.3);
+}
+.diff-btn:hover { border-color: rgba(255,255,255,0.3); }
+
+/* start button */
+.home-bottom { width: 100%; }
+
+.start-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff9f1c 100%);
+  border: none;
+  border-radius: 18px;
+  padding: 18px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 30px rgba(255,77,109,0.4);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.start-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,77,109,0.5); }
+.start-btn:active { transform: translateY(0); }
+
+.home-foot {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.home-foot button {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Kanit', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+.home-foot button:hover { color: white; }
+
+.hi-score {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: 11px;
+  color: var(--gold);
+  margin-top: 14px;
+  letter-spacing: 1px;
+}
+
+/* ============ GAME PAGE ============ */
+#game { background: white; }
+
+/* HUD */
+.hud {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  padding: 30px 14px 12px;
+  position: relative;
+}
+.hud::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, #ff9f1c, transparent);
+}
+
+.hud-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px; font-family: 'Kanit', sans-serif;
+}
+.shop-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.shop-badge .ico { background: #ff9f1c; color: #1a1a2e; width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
+.scenario-tag { background: rgba(255,77,109,0.2); color: #ff6b8a; border: 1px solid rgba(255,77,109,0.4); padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+
+.hud-main { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; }
+.timer-box { text-align: center; }
+.timer-label { font-family: 'Kanit', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 1px; opacity: 0.7; }
+.timer { font-family: 'Kanit', sans-serif; font-size: 30px; font-weight: 800; color: #ff9f1c; font-variant-numeric: tabular-nums; line-height: 1; text-shadow: 0 0 16px rgba(255,159,28,0.5); }
+.meters { display: flex; flex-direction: column; gap: 5px; }
+.meter { font-family: 'Kanit', sans-serif; }
+.meter-label { display: flex; justify-content: space-between; font-size: 10px; font-weight: 600; margin-bottom: 2px; }
+.meter-label .name { opacity: 0.85; }
+.meter-bar { height: 6px; background: rgba(255,255,255,0.12); border-radius: 4px; overflow: hidden; }
+.meter-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+.mood-fill { background: linear-gradient(90deg, #fa383e, #ff9f1c); }
+.profit-fill { background: linear-gradient(90deg, #31a24c, #5dd968); }
+
+/* FB header */
+.fb-header { background: white; border-bottom: 1px solid var(--border); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.back { color: var(--fb-blue); font-size: 24px; font-weight: 300; cursor: pointer; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #ffafcc, #ff6b9d); display: flex; align-items: center; justify-content: center; font-size: 18px; position: relative; flex-shrink: 0; }
+.active-dot { position: absolute; bottom: -1px; right: -1px; width: 11px; height: 11px; background: #31a24c; border-radius: 50%; border: 2.5px solid white; }
+.user-info { flex: 1; }
+.user-info .name { font-weight: 600; font-size: 14px; color: var(--ink); }
+.user-info .status { font-size: 11px; color: var(--secondary); }
+.fb-icons { display: flex; gap: 14px; color: var(--fb-blue); font-size: 18px; }
+
+/* chat */
+.chat { background: white; flex: 1; overflow-y: auto; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
+.chat::-webkit-scrollbar { width: 0; }
+.timestamp { text-align: center; font-size: 11px; color: var(--secondary); margin: 6px 0 10px; font-weight: 600; }
+.msg-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: flex-end; }
+.msg-row.out { justify-content: flex-end; }
+.msg-avatar-sm { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #ffafcc, #ff6b9d); display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.bubbles { display: flex; flex-direction: column; gap: 2px; max-width: 78%; }
+.msg-row.out .bubbles { align-items: flex-end; }
+.bubble { padding: 8px 13px; border-radius: 18px; font-size: 14px; line-height: 1.4; word-wrap: break-word; animation: bubbleIn 0.3s ease-out; }
+@keyframes bubbleIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.bubble.in { background: var(--grey-bubble); color: var(--ink); }
+.bubble.in + .bubble.in { border-top-left-radius: 4px; }
+.bubble.in:not(:last-child) { border-bottom-left-radius: 4px; }
+.bubble.out { background: linear-gradient(135deg, var(--fb-blue-1), var(--fb-blue-2)); color: white; }
+.bubble.out + .bubble.out { border-top-right-radius: 4px; }
+.bubble.out:not(:last-child) { border-bottom-right-radius: 4px; }
+
+.typing-bubble { background: var(--grey-bubble); padding: 11px 14px; border-radius: 18px; display: inline-flex; gap: 4px; align-items: center; }
+.typing-dot { width: 6px; height: 6px; background: #8a8d91; border-radius: 50%; animation: typing 1.4s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+/* response options */
+.responses { background: #f7f8fa; border-top: 1px solid var(--border); padding: 10px 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.resp-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Kanit', sans-serif; }
+.resp-header .label { font-size: 11px; font-weight: 700; color: var(--secondary); letter-spacing: 1px; text-transform: uppercase; }
+.resp-header .hint { font-size: 10px; color: var(--secondary); background: #e4e6eb; padding: 2px 8px; border-radius: 10px; }
+.btn { background: white; border: 1.5px solid var(--border); border-radius: 14px; padding: 9px 11px; text-align: left; cursor: pointer; transition: all 0.15s ease; display: flex; justify-content: space-between; align-items: center; gap: 10px; position: relative; overflow: hidden; font-family: 'Sarabun', sans-serif; }
+.btn::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+.btn.b1::before { background: linear-gradient(180deg,#31a24c,#5dd968); }
+.btn.b2::before { background: linear-gradient(180deg,var(--fb-blue),var(--fb-blue-2)); }
+.btn.b3::before { background: linear-gradient(180deg,#ff9f1c,#ff6b00); }
+.btn.b4::before { background: linear-gradient(180deg,#9b59b6,#6c3483); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+.btn.b1:hover { border-color: #31a24c; }
+.btn.b2:hover { border-color: var(--fb-blue); }
+.btn.b3:hover { border-color: #ff9f1c; }
+.btn.b4:hover { border-color: #9b59b6; }
+.btn-content { flex: 1; padding-left: 6px; }
+.btn-tag { font-family: 'Kanit', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px; }
+.btn.b1 .btn-tag { color: #31a24c; }
+.btn.b2 .btn-tag { color: var(--fb-blue); }
+.btn.b3 .btn-tag { color: #ff9f1c; }
+.btn.b4 .btn-tag { color: #9b59b6; }
+.btn-text { font-size: 12.5px; color: var(--ink); line-height: 1.35; }
+.btn-fx { display: flex; flex-direction: column; gap: 2px; font-family: 'Kanit', sans-serif; font-size: 10px; font-weight: 700; flex-shrink: 0; align-items: flex-end; }
+.fx-good { color: #31a24c; }
+.fx-bad { color: var(--danger); }
+.fx-mid { color: var(--secondary); }
+
+/* demo note */
+.demo-note {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Kanit', sans-serif;
+  font-size: 9px;
+  color: rgba(0,0,0,0.4);
+  background: rgba(255,255,255,0.9);
+  padding: 3px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  z-index: 50;
+}
+
+/* caption below phone */
+.caption {
+  position: fixed;
+  bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Kanit', sans-serif;
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  z-index: 1;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="float">💬</div>
+<div class="float">😤</div>
+<div class="float">💸</div>
+<div class="float">😭</div>
+<div class="float">🛍️</div>
+<div class="float">⭐</div>
+
+<div class="frame">
+  <div class="screen">
+    <div class="notch"></div>
+
+    <!-- ============ HOME PAGE ============ -->
+    <div class="page active" id="home">
+      <div class="home-top">
+        <div class="home-badge">🇹🇭 Thai Indie Game</div>
+        <div class="home-logo">
+          <span class="chat-ico c1">💬</span>
+          <span class="chat-ico c2">😡</span>
+          <h1>แอดมิน<br>ซิม</h1>
+        </div>
+        <div class="home-sub">Admin Simulator</div>
+        <div class="home-tagline">
+          เอาตัวรอดในฐานะแอดมินเพจ<br>กล่อมลูกค้าหัวร้อนให้ใจเย็นใน 3 นาที 🔥
+        </div>
+      </div>
+
+      <div class="home-mid">
+        <div class="diff-label">เลือกระดับความยาก</div>
+        <div class="diff-row">
+          <div class="diff-btn active" data-diff="easy" onclick="selectDiff(this)">
+            <span class="d-ico">😊</span>
+            <div class="d-name">Easy</div>
+            <div class="d-desc">เลือกตอบ</div>
+          </div>
+          <div class="diff-btn" data-diff="normal" onclick="selectDiff(this)">
+            <span class="d-ico">😏</span>
+            <div class="d-name">Normal</div>
+            <div class="d-desc">พิมพ์ได้ ×1.5</div>
+          </div>
+          <div class="diff-btn" data-diff="hardcore" onclick="selectDiff(this)">
+            <span class="d-ico">🔥</span>
+            <div class="d-name">Hardcore</div>
+            <div class="d-desc">พิมพ์ล้วน AI</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-bottom">
+        <button class="start-btn" onclick="startGame()">▶ เริ่มเล่น</button>
+        <div class="home-foot">
+          <button>🏆 คะแนนสูงสุด</button>
+          <button>⚙️ ตั้งค่า</button>
+          <button>❔ วิธีเล่น</button>
+        </div>
+        <div class="hi-score">🏆 BEST: 2,340 · 👑 GOAT แอดมิน</div>
+      </div>
+    </div>
+
+    <!-- ============ GAME PAGE ============ -->
+    <div class="page" id="game">
+      <div class="hud">
+        <div class="hud-top">
+          <div class="shop-badge"><span class="ico">G</span><span>ร้าน Glow Up Cream</span></div>
+          <div class="scenario-tag">🎭 สายดราม่า</div>
+        </div>
+        <div class="hud-main">
+          <div class="timer-box">
+            <div class="timer-label">เวลา</div>
+            <div class="timer" id="timer">3:00</div>
+          </div>
+          <div class="meters">
+            <div class="meter">
+              <div class="meter-label"><span class="name">😡 มู้ดลูกค้า</span><span class="val" id="moodVal">25 / 100</span></div>
+              <div class="meter-bar"><div class="meter-fill mood-fill" id="moodBar" style="width:25%"></div></div>
+            </div>
+            <div class="meter">
+              <div class="meter-label"><span class="name">💰 กำไรร้าน</span><span class="val" id="profitVal">100 / 100</span></div>
+              <div class="meter-bar"><div class="meter-fill profit-fill" id="profitBar" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-header">
+        <div class="back" onclick="goHome()">‹</div>
+        <div class="avatar">🥺<div class="active-dot"></div></div>
+        <div class="user-info">
+          <div class="name">น้องนุ่น ค่ะะ 🎀</div>
+          <div class="status">กำลังใช้งานอยู่</div>
+        </div>
+        <div class="fb-icons"><span>📞</span><span>📹</span></div>
+      </div>
+
+      <div class="chat" id="chat">
+        <div class="timestamp">วันนี้ 14:32</div>
+        <div class="msg-row">
+          <div class="msg-avatar-sm">🥺</div>
+          <div class="bubbles">
+            <div class="bubble in">พี่ค่าาาาา 😭😭😭</div>
+            <div class="bubble in">หนูใช้ครีม 3 วันแล้วไม่ขาวขึ้นเลยค่ะ</div>
+            <div class="bubble in">หน้ายังดำเหมือนเดิม ผิดหวังมากกก หนูเป็นแฟนคลับร้านพี่มาตั้งนานน 😭</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="responses" id="responses">
+        <div class="resp-header">
+          <span class="label">เลือกคำตอบ</span>
+          <span class="hint">tap ↓</span>
+        </div>
+        <button class="btn b1" onclick="respond('yield')">
+          <div class="btn-content"><div class="btn-tag">ยอมทุกอย่าง</div><div class="btn-text">"ได้ค่ะ เดี๋ยวคืนเงินเต็มจำนวนเลยนะคะ 🙏"</div></div>
+          <div class="btn-fx"><span class="fx-good">😊 +30</span><span class="fx-bad">💰 −40</span></div>
+        </button>
+        <button class="btn b2" onclick="respond('negotiate')">
+          <div class="btn-content"><div class="btn-tag">เจรจาฉลาด</div><div class="btn-text">"ขอเสนอส่วนลด 30% ครั้งหน้า + คู่มือใช้ครีมค่ะ ✨"</div></div>
+          <div class="btn-fx"><span class="fx-good">😊 +15</span><span class="fx-mid">💰 0</span></div>
+        </button>
+        <button class="btn b3" onclick="respond('refuse')">
+          <div class="btn-content"><div class="btn-tag">ปฏิเสธสุภาพ</div><div class="btn-text">"ขออภัยค่ะ ทางร้านไม่รับคืนสินค้าที่เปิดใช้แล้ว"</div></div>
+          <div class="btn-fx"><span class="fx-bad">😊 −10</span><span class="fx-mid">💰 0</span></div>
+        </button>
+        <button class="btn b4" onclick="respond('deflect')">
+          <div class="btn-content"><div class="btn-tag">ปั่น / โยกย้าย</div><div class="btn-text">"เดี๋ยวแจ้งหัวหน้าทีมตรวจสอบให้ก่อนนะคะ 🙏"</div></div>
+          <div class="btn-fx"><span class="fx-mid">😊 0</span><span class="fx-mid">⏱ ซื้อเวลา</span></div>
+        </button>
+      </div>
+
+      <div class="demo-note">🎮 Demo — ตัวเลข/บทสนทนายังเป็น mockup</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="caption" id="caption">👆 กด "เริ่มเล่น" เพื่อดูตัวอย่างเกม</div>
+
+<script>
+let difficulty = 'easy';
+let mood = 25, profit = 100, timeLeft = 180;
+let timerInterval = null;
+
+function selectDiff(el) {
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  difficulty = el.dataset.diff;
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startGame() {
+  showPage('game');
+  document.getElementById('caption').textContent = '🎮 ตัวอย่างการเล่น — กดเลือกคำตอบเพื่อดู effect';
+  resetGame();
+  startTimer();
+}
+
+function goHome() {
+  showPage('home');
+  document.getElementById('caption').textContent = '👆 กด "เริ่มเล่น" เพื่อดูตัวอย่างเกม';
+  clearInterval(timerInterval);
+}
+
+function resetGame() {
+  mood = 25; profit = 100; timeLeft = 180;
+  updateHUD();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft <= 0) { timeLeft = 0; clearInterval(timerInterval); }
+    updateTimer();
+  }, 1000);
+}
+
+function updateTimer() {
+  const m = Math.floor(timeLeft / 60);
+  const s = String(timeLeft % 60).padStart(2, '0');
+  document.getElementById('timer').textContent = `${m}:${s}`;
+}
+
+function updateHUD() {
+  mood = Math.max(0, Math.min(100, mood));
+  profit = Math.max(0, Math.min(100, profit));
+  document.getElementById('moodVal').textContent = `${mood} / 100`;
+  document.getElementById('profitVal').textContent = `${profit} / 100`;
+  document.getElementById('moodBar').style.width = mood + '%';
+  document.getElementById('profitBar').style.width = profit + '%';
+  updateTimer();
+}
+
+// Demo reaction data
+const reactions = {
+  yield:     { mood:+30, profit:-40, reply:["พี่ใจดีมากกกก 😭❤️ หนูซาบซึ้งสุดๆ ขอบคุณค่าาาา 🙏"] },
+  negotiate: { mood:+15, profit:0,   reply:["อืมม... ก็ได้ค่ะ 🥺","แต่หนูยังเศร้าอยู่นะคะ 💔"] },
+  refuse:    { mood:-15, profit:0,   reply:["พี่ใจร้ายยยย 😭😭","ทำไมร้านพี่ใจร้ายกับหนูแบบนี้ 💔"] },
+  deflect:   { mood:+5,  profit:0,   reply:["ค่ะะ หนูรอนะคะ พี่ๆ 🥺","พี่ต้องช่วยหนูนะคะะ 💔"] }
+};
+
+const playerText = {
+  yield: "ได้ค่ะ เดี๋ยวคืนเงินเต็มจำนวนเลยนะคะ 🙏",
+  negotiate: "ครีมต้องใช้ต่อเนื่อง 4-6 สัปดาห์ค่ะ ขอส่งคู่มือใช้งาน + ส่วนลด 30% ครั้งหน้าให้นะคะ ✨",
+  refuse: "ขออภัยค่ะ ทางร้านมีนโยบายไม่รับคืนสินค้าที่เปิดใช้แล้วนะคะ",
+  deflect: "เดี๋ยวแจ้งหัวหน้าทีมตรวจสอบเคสให้ก่อนนะคะ รอสักครู่ค่ะ 🙏"
+};
+
+let busy = false;
+function respond(type) {
+  if (busy || timeLeft <= 0) return;
+  busy = true;
+  const chat = document.getElementById('chat');
+
+  // player message
+  const out = document.createElement('div');
+  out.className = 'msg-row out';
+  out.innerHTML = `<div class="bubbles"><div class="bubble out">${playerText[type]}</div></div>`;
+  chat.appendChild(out);
+  chat.scrollTop = chat.scrollHeight;
+
+  // apply stat changes
+  const r = reactions[type];
+  mood += r.mood; profit += r.profit;
+  updateHUD();
+
+  // typing indicator
+  setTimeout(() => {
+    const typing = document.createElement('div');
+    typing.className = 'msg-row';
+    typing.id = 'typingRow';
+    typing.innerHTML = `<div class="msg-avatar-sm">🥺</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+      document.getElementById('typingRow')?.remove();
+      const row = document.createElement('div');
+      row.className = 'msg-row';
+      const bubbles = r.reply.map(t => `<div class="bubble in">${t}</div>`).join('');
+      row.innerHTML = `<div class="msg-avatar-sm">🥺</div><div class="bubbles">${bubbles}</div>`;
+      chat.appendChild(row);
+      chat.scrollTop = chat.scrollHeight;
+      busy = false;
+
+      // check win/lose
+      if (mood >= 80) endGame('win');
+      else if (mood <= 0) endGame('lose');
+    }, 1400);
+  }, 500);
+}
+
+function endGame(result) {
+  clearInterval(timerInterval);
+  const chat = document.getElementById('chat');
+  const banner = document.createElement('div');
+  banner.style.cssText = 'text-align:center; padding:20px; font-family:Kanit; margin-top:10px;';
+  if (result === 'win') {
+    const score = Math.round(mood * profit * (timeLeft/180) / 10);
+    banner.innerHTML = `<div style="font-size:40px; font-weight:900; background:linear-gradient(135deg,#ffd60a,#ff9f1c,#ff4d6d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">🎉 WIN!</div><div style="font-size:32px; font-weight:700; color:#1a1a2e; margin-top:8px;">${score.toLocaleString()}</div><div style="font-size:12px; color:#888; letter-spacing:2px;">FINAL SCORE</div>`;
+  } else {
+    banner.innerHTML = `<div style="font-size:40px; font-weight:900; color:#fa383e;">💀 LOSE</div><div style="font-size:13px; color:#888; margin-top:6px;">ลูกค้าโดน 1 ดาว เพจถูก review bomb</div>`;
+  }
+  chat.appendChild(banner);
+  chat.scrollTop = chat.scrollHeight;
+  document.getElementById('responses').style.opacity = '0.4';
+  document.getElementById('responses').style.pointerEvents = 'none';
+  document.getElementById('caption').textContent = '🔄 กด ‹ มุมซ้ายบนเพื่อกลับหน้าแรก';
+}
+</script>
+</body>
+</html>

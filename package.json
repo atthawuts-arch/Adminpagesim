@@ -1,0 +1,66 @@
+{
+  "name": "admin-sim",
+  "version": "0.1.0",
+  "description": "แอดมินซิม — Admin Simulator. Thai-language indie game about handling angry customers as a Facebook page admin.",
+  "author": {
+    "name": "AdminSim",
+    "email": "noreply@local"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "start": "node server/index.mjs",
+    "serve:web": "node server/index.mjs",
+    "build:win": "electron-builder --win --x64",
+    "build:dir": "electron-builder --dir",
+    "pack:win": "electron-packager . AdminSim --platform=win32 --arch=x64 --out=dist --overwrite --asar --ignore=\"^/(dist|build|docs|mockups|tools|.claude|.git|.gitignore|server)\"",
+    "zip:win": "npm run pack:win && powershell -Command \"Compress-Archive -Path dist/AdminSim-win32-x64/* -DestinationPath dist/AdminSim-portable-win-x64.zip -Force\""
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.0.0",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.adminsim.game",
+    "productName": "AdminSim",
+    "copyright": "Copyright © 2026",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "!src/README.md",
+      "!**/node_modules/**/*",
+      "!**/.git/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "AdminSim-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "แอดมินซิม",
+      "uninstallDisplayName": "แอดมินซิม (Admin Simulator)"
+    }
+  }
+}

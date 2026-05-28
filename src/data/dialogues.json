@@ -1,0 +1,496 @@
+{
+  "openings": [
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "drama",
+      "name": "น้องนุ่น",
+      "messages": [
+        "พี่ค่าาาา 😭😭😭",
+        "หนูสั่งเสื้อมา ใส่ไม่ได้เลยค่ะะ คับมากกก",
+        "หนูเฝ้ารอเสื้อร้านพี่มาเป็นเดือนนน หนูจะร้องไห้ 💔"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "threat",
+      "name": "คุณดิฉัน",
+      "messages": [
+        "ค่ะ ดิฉันสั่งเสื้อจากร้านคุณ คับเกินไป ขอคืนเงินค่ะ",
+        "ถ้าไม่คืนเตรียมเจอรีวิว 1 ดาว ทุก platform เลยนะ 🔥"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "noread",
+      "name": "น้องเมย์",
+      "messages": [
+        "เสื้อใส่ไม่ได้ค่ะ",
+        "คับ คืนยังไงคะ?"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "compare",
+      "name": "หนูแอม",
+      "messages": [
+        "พี่ๆ เสื้อใส่ไม่ได้ค่ะ ขอเปลี่ยนไซส์",
+        "ร้าน X ที่หนูเคยซื้อเขายังเปลี่ยนได้เลยนะคะ",
+        "ทำไมร้านพี่ทำไม่ได้?"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "discount",
+      "name": "น้องเฟิร์น",
+      "messages": [
+        "พี่คะ หนูใส่ไม่ได้ คืนครึ่งราคาก็ได้ค่ะ น่าาาา",
+        "หนูเด็กนักศึกษา ไม่ค่อยมีตังค์ 🥺"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "accuse",
+      "name": "คุณกานต์",
+      "messages": [
+        "ขายเสื้อยังไงคะ? ตารางไซส์ไม่ละเอียดเลย",
+        "แล้วบอกว่าลูกค้าผิดเอง? เปิดร้านยังไงเนี่ย?"
+      ]
+    },
+    {
+      "situation_id": "shop_clothes",
+      "customer_type_id": "flip",
+      "name": "น้องพิม",
+      "messages": [
+        "สวัสดีค่ะพี่ น่ารักมากเลยค่าาา 💕",
+        "หนูใส่เสื้อพี่ไม่ได้ค่ะ ขอเปลี่ยนไซส์ได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "drama",
+      "name": "น้องบีม",
+      "messages": [
+        "พี่คะ 😭 หนูสั่งอาหารร้านพี่มาตั้งใจมาก",
+        "แต่กินไปครึ่งกล่องแล้วกินต่อไม่ลงค่ะ",
+        "รสชาติแปลกๆ ค่าาา 💔"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "threat",
+      "name": "คุณมิ้น",
+      "messages": [
+        "อาหารร้านนี้รสชาติแย่มาก กินไปครึ่งกล่อง ขอเงินคืน",
+        "ไม่ให้คืนจะลงเพจ 'เตือนภัยอาหาร' 7 แสนสมาชิกนะคะ"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "noread",
+      "name": "น้องเก่ง",
+      "messages": [
+        "อาหารไม่อร่อยค่ะ ขอเงินคืน"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "compare",
+      "name": "หนูปาล์ม",
+      "messages": [
+        "ครัวร้านอื่นเขายังคืนเงินเลยถ้าลูกค้าไม่พอใจ",
+        "พี่ไม่คืนเหรอคะ? แย่กว่าเขานะคะ"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "discount",
+      "name": "น้องอาย",
+      "messages": [
+        "พี่ๆ อาหารหวานไป กินไม่ลงค่ะ",
+        "คืนเงินครึ่งนึงก็ได้นะคะ พี่ๆ น่าาา 🥺"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "accuse",
+      "name": "คุณวุ้น",
+      "messages": [
+        "ขายอาหารแบบนี้เหรอ? รสชาติประหลาดมาก",
+        "คนทำเป็นคนเหรอคะ? เคยชิมก่อนขายมั้ย?"
+      ]
+    },
+    {
+      "situation_id": "shop_food",
+      "customer_type_id": "flip",
+      "name": "น้องเจน",
+      "messages": [
+        "พี่คะ packaging น่ารักมากเลยค่าาา 💕",
+        "แต่...รสชาติยังไงดีนะ คืนเงินให้หนูได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "drama",
+      "name": "น้องนุ่น",
+      "messages": [
+        "พี่ค่าาาา 😭 หนูใช้ครีม 3 วันแล้วไม่ขาวขึ้นเลยค่ะ",
+        "หน้ายังดำเหมือนเดิม",
+        "หนูเป็นแฟนคลับร้านพี่มาตั้งนานน 💔"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "threat",
+      "name": "คุณตา",
+      "messages": [
+        "ครีมร้านนี้ไม่ได้ผล ใช้มา 5 วันหน้าเหมือนเดิม",
+        "ขอเงินคืน ไม่งั้นลงพันทิป + แฉ TikTok แน่ 🔥"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "noread",
+      "name": "น้องเอ๋",
+      "messages": [
+        "ครีมไม่ได้ผลค่ะ ขอเงินคืน"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "compare",
+      "name": "หนูแพร",
+      "messages": [
+        "ครีมยี่ห้ออื่นใช้ 3 วันขาวเลยนะคะ",
+        "ทำไมร้านพี่ไม่ได้ผล? คุณภาพต่ำกว่าหรอ?"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "discount",
+      "name": "น้องโบว์",
+      "messages": [
+        "พี่คะ ครีมไม่ค่อยได้ผล",
+        "คืนสัก 500 บาทก็ได้ค่ะ น่าาา ขอเป็นค่าหวานใจ 🥺"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "accuse",
+      "name": "คุณนิด",
+      "messages": [
+        "ขายครีมแบบไหนคะ? อ้างว่า 4-6 สัปดาห์เพื่ออะไร?",
+        "แค่อยากให้คนใช้จนหมดหลอด? นี่หลอกลูกค้านี่นา"
+      ]
+    },
+    {
+      "situation_id": "shop_cream",
+      "customer_type_id": "flip",
+      "name": "น้องอุ๊",
+      "messages": [
+        "สวัสดีค่ะพี่ ครีมหอมมากค่าาา 💕",
+        "แต่ขาวมั้ย...อืม คืนเงินได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "drama",
+      "name": "น้องเฟิร์น",
+      "messages": [
+        "พี่ค่าาาา 😭 หนูสั่งพิมพ์ชื่อแฟนค่ะ",
+        "แต่ดูแล้วสะกดผิด!!",
+        "มันจะเป็นวันเกิดเขาแล้วววว 💔😭"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "threat",
+      "name": "คุณบีม",
+      "messages": [
+        "พิมพ์ชื่อมาผิด ขอทำใหม่ฟรี!",
+        "ไม่งั้นเอาเรื่อง ตอนนี้กฎหมายผู้บริโภคแรงขึ้นแล้วนะ"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "noread",
+      "name": "น้องป๋อ",
+      "messages": [
+        "ชื่อพิมพ์ผิดค่ะ ทำใหม่ให้หน่อย"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "compare",
+      "name": "หนูจ๋า",
+      "messages": [
+        "ร้านอื่นเขาส่ง preview ให้ confirm ก่อนพิมพ์เลยนะคะ",
+        "ทำไมร้านพี่ไม่ทำ? ระบบล้าหลังจัง"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "discount",
+      "name": "น้องเก๋",
+      "messages": [
+        "พี่คะ พิมพ์ผิดอ่ะ ทำใหม่ลด 50% ก็ได้ค่ะ น่าาา 🥺",
+        "ขอช่วยกัน หนูพลาดแต่พี่ก็ไม่ confirm 555"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "accuse",
+      "name": "คุณวุ้น",
+      "messages": [
+        "ระบบสั่งซื้อร้านนี้แย่มาก ไม่มี confirm ชื่อก่อนพิมพ์เหรอ?",
+        "เปิดร้าน custom แบบนี้ได้ไง? ลูกค้าพิมพ์ผิดก็ต้องเตือน"
+      ]
+    },
+    {
+      "situation_id": "shop_custom",
+      "customer_type_id": "flip",
+      "name": "น้องอ้อม",
+      "messages": [
+        "พี่คะ งานสวยมากค่าาา ปริ้นชัดเป๊ะมาก 💕",
+        "แต่ชื่อผิดอ่ะ ทำใหม่ให้หนูฟรีได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "drama",
+      "name": "น้องมุก",
+      "messages": [
+        "พี่ค่าาาา 😭 ต้นไม้ที่ซื้อจากร้านพี่ตายแล้วค่ะ",
+        "หนูรักมันมาก เลี้ยงมาเหมือนลูก",
+        "หนูเสียใจสุดๆ 💔🪦"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "threat",
+      "name": "คุณตั้ม",
+      "messages": [
+        "ต้นไม้ตายภายในอาทิตย์เดียว ส่งของแบบนี้เหรอ?",
+        "คืนเงินด่วน ไม่งั้นลงกลุ่ม 'คนรักต้นไม้' 2 แสนคนแน่"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "noread",
+      "name": "น้องเอ",
+      "messages": [
+        "ต้นไม้ตายค่ะ ส่งใหม่หน่อย"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "compare",
+      "name": "หนูฝน",
+      "messages": [
+        "ซื้อจากร้าน X ต้นไม้แข็งแรงมาก",
+        "ของร้านพี่ตายภายในอาทิตย์ ส่งของไม่ดีหรือยังไง?"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "discount",
+      "name": "น้องเล็ก",
+      "messages": [
+        "พี่คะ ต้นตายค่ะ",
+        "ส่งใหม่ลด 50% ก็ได้ค่ะ ขอแค่ทดแทนหน่อย 🥺"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "accuse",
+      "name": "คุณนุ้ย",
+      "messages": [
+        "เพาะต้นไม้ยังไงคะ ส่งมาตายเร็วขนาดนี้?",
+        "ไม่บอกวิธีดูแลด้วย? ลูกค้าจะรู้ได้ไง? นี่เปิดร้านต้นไม้นะ"
+      ]
+    },
+    {
+      "situation_id": "shop_plant",
+      "customer_type_id": "flip",
+      "name": "น้องดี",
+      "messages": [
+        "พี่คะ ต้นไม้สวยมากตอนได้รับค่าาา ใบเขียวเลย 💕",
+        "แต่...ตายไปแล้วค่ะ คืนเงินให้หน่อยได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "drama",
+      "name": "น้องเมย์",
+      "messages": [
+        "พี่ค่าาาา 😭 หนูสั่ง preorder ของพี่ตั้งแต่เดือนที่แล้ว",
+        "ของยังไม่มาเลย",
+        "จะใช้ในงานสำคัญอาทิตย์หน้า ทำยังไงดีคะะะ 💔"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "threat",
+      "name": "คุณเต้",
+      "messages": [
+        "preorder รออะไรนานขนาดนี้?? เร่งให้หน่อย!",
+        "ไม่งั้นยกเลิก + ลงรีวิวเลยนะ เสียเวลามาก"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "noread",
+      "name": "น้องเก่ง",
+      "messages": [
+        "ของพี่ยังไม่มาเลยค่ะ"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "compare",
+      "name": "หนูแอม",
+      "messages": [
+        "preorder ร้านอื่นใช้แค่ 2 อาทิตย์เองนะ",
+        "ร้านพี่ทำไม 30 วัน? ช้าจัง"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "discount",
+      "name": "น้องโบ",
+      "messages": [
+        "พี่ๆ รอนานมากกก",
+        "ลดราคาให้นิดนึงได้มั้ยคะ ชดเชยการรอ 🥺 น่าาา"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "accuse",
+      "name": "คุณเอ๋",
+      "messages": [
+        "พรีออเดอร์ทำงานยังไง? ทำไมนาน?",
+        "บอกชัดๆ ได้มั้ยว่าจะส่งวันไหน? ไม่ใช่บอกแค่ 30 วันลอยๆ"
+      ]
+    },
+    {
+      "situation_id": "shop_preorder",
+      "customer_type_id": "flip",
+      "name": "น้องแพร",
+      "messages": [
+        "พี่คะ การ์ดน่ารักมากค่าาา 💕",
+        "แต่ของยังไม่มาเลย ส่งเร็วกว่านี้ได้มั้ยคะ?"
+      ]
+    },
+
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "drama",
+      "name": "น้องเฟย์",
+      "messages": [
+        "พี่ค่าาาา 😭 ของที่ซื้อมาเก่ามากกก",
+        "ดูใช้แล้วเยอะมาก หนูคิดว่าจะได้สภาพดีกว่านี้ค่ะ 💔"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "threat",
+      "name": "คุณนิด",
+      "messages": [
+        "สั่งของมือสอง ได้สภาพแย่กว่ารูปเยอะ!",
+        "คืนเงินด่วน ไม่งั้นลงเรียกร้องผ่าน Shopee + กลุ่ม Facebook"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "noread",
+      "name": "น้องเอม",
+      "messages": [
+        "ของเก่ามากค่ะ ขอคืน"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "compare",
+      "name": "หนูแก้ม",
+      "messages": [
+        "ร้านมือสองอื่นเขาสภาพดีกว่าเยอะนะ",
+        "ร้านพี่เลือกของยังไงคะ? เกรดต่ำกว่ามาก"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "discount",
+      "name": "น้องโบว์",
+      "messages": [
+        "พี่ๆ ของเก่าไปนะ",
+        "คืน 30% ก็ได้ค่ะ ขอช่วยหนูหน่อย 🥺"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "accuse",
+      "name": "คุณจิ๋ม",
+      "messages": [
+        "บอกเป็นมือสองนี่คือสภาพแบบไหนคะ?",
+        "เก่าสภาพ 2 ดาวยังเอามาขาย? เปิดร้านมือสองยังไงเนี่ย?"
+      ]
+    },
+    {
+      "situation_id": "shop_secondhand",
+      "customer_type_id": "flip",
+      "name": "น้องเปิ้ล",
+      "messages": [
+        "พี่คะ ของน่ารักค่าาา packaging ดีด้วย 💕",
+        "แต่...เก่าไปนิดนึง คืนเงินบางส่วนได้มั้ยคะ?"
+      ]
+    }
+  ],
+
+  "reactions": [
+    { "customer_type_id": "drama", "response_type": "yield",     "mood_change":  35, "profit_change": -40, "messages": ["พี่ใจดีมากกกก 😭❤️", "หนูซาบซึ้งสุดๆ ขอบคุณค่าาาา 🙏"] },
+    { "customer_type_id": "drama", "response_type": "negotiate", "mood_change":  15, "profit_change": -10, "messages": ["อืมม... ก็ได้ค่ะ", "แต่หนูยังเศร้าอยู่นะคะ 🥺💔"] },
+    { "customer_type_id": "drama", "response_type": "refuse",    "mood_change": -15, "profit_change":   0, "messages": ["พี่ใจร้ายยยย 😭😭", "ทำไมร้านพี่ใจร้ายกับหนูแบบนี้ 💔"] },
+    { "customer_type_id": "drama", "response_type": "deflect",   "mood_change":   5, "profit_change":   0, "messages": ["ค่ะะ หนูรอนะคะ พี่ๆ", "พี่ต้องช่วยหนูนะคะ 🥺"] },
+
+    { "customer_type_id": "threat", "response_type": "yield",     "mood_change":  25, "profit_change": -40, "messages": ["อืม ก็ดี", "ทำดีตั้งแต่แรกก็ไม่ต้องโดนด่า โอเค จบเรื่อง"] },
+    { "customer_type_id": "threat", "response_type": "negotiate", "mood_change":  12, "profit_change": -10, "messages": ["เอาก็เอาวะ ค่อยยังชั่ว", "แต่เตือนนะ ครั้งต่อไปขอเต็ม"] },
+    { "customer_type_id": "threat", "response_type": "refuse",    "mood_change": -25, "profit_change": -15, "messages": ["เอ้าจริงดิ!", "เก็บคำพูดไว้นะ เจอกันบนพันทิป!! 🔥"] },
+    { "customer_type_id": "threat", "response_type": "deflect",   "mood_change":  -5, "profit_change":   0, "messages": ["หัวหน้าใคร?", "เร็วๆ นะ ไม่ใช่จะรอเป็นวัน"] },
+
+    { "customer_type_id": "noread", "response_type": "yield",     "mood_change":  28, "profit_change": -40, "messages": ["อ๋อคืนได้เหรอคะ?", "แล้วต้องส่งคืนยังไง? เคยทำมั้ย?"] },
+    { "customer_type_id": "noread", "response_type": "negotiate", "mood_change":  12, "profit_change": -10, "messages": ["คูปองอะไรคะ?", "ใช้ยังไง? เห็นข้อความได้ที่ไหน?"] },
+    { "customer_type_id": "noread", "response_type": "refuse",    "mood_change":  -8, "profit_change":   0, "messages": ["ห้ะ? คืนไม่ได้?", "ทำไม? ทำไมล่ะคะ?"] },
+    { "customer_type_id": "noread", "response_type": "deflect",   "mood_change":  -3, "profit_change":   0, "messages": ["หัวหน้า? ใคร?", "โทรหาเขาเลยมั้ย? เบอร์อะไร?"] },
+
+    { "customer_type_id": "compare", "response_type": "yield",     "mood_change":  22, "profit_change": -40, "messages": ["เห็นมั้ยคะ ทำได้นี่นา", "แต่ร้านอื่นเขายังให้ส่วนลดด้วยนะ"] },
+    { "customer_type_id": "compare", "response_type": "negotiate", "mood_change":   5, "profit_change": -10, "messages": ["อืม โอเค", "แต่ร้าน X เขาให้ 50% นะคะ พี่ให้แค่ 30%?"] },
+    { "customer_type_id": "compare", "response_type": "refuse",    "mood_change": -20, "profit_change":   0, "messages": ["ทำไมร้านอื่นทำได้ ร้านพี่ทำไม่ได้??", "บริการแย่กว่าเยอะ"] },
+    { "customer_type_id": "compare", "response_type": "deflect",   "mood_change":  -5, "profit_change":   0, "messages": ["หัวหน้า?", "ร้านอื่นเขาตอบเดี๋ยวนั้นเลยนะ ไม่ต้องไปถาม"] },
+
+    { "customer_type_id": "discount", "response_type": "yield",     "mood_change":  30, "profit_change": -40, "messages": ["ขอบคุณค่าาาาา 🥰🥰", "พี่ใจดีมากเลยค่ะ"] },
+    { "customer_type_id": "discount", "response_type": "negotiate", "mood_change":   8, "profit_change": -10, "messages": ["อืม... เพิ่มอีกได้มั้ยพี่ น่าาาา", "หนูจนจริงๆ 🥺"] },
+    { "customer_type_id": "discount", "response_type": "refuse",    "mood_change": -12, "profit_change":   0, "messages": ["พี่ใจร้ายอ่ะ T_T", "ขอแค่นิดเดียวเอง 1 บาทก็ได้นะ 😔"] },
+    { "customer_type_id": "discount", "response_type": "deflect",   "mood_change":   0, "profit_change":   0, "messages": ["เร็วๆ นะพี่ๆ หนูรีบ", "ขอลดก่อนน่าาา"] },
+
+    { "customer_type_id": "accuse", "response_type": "yield",     "mood_change":  18, "profit_change": -40, "messages": ["อ๋อ คืนได้สิ", "แล้วทำไมตอนแรกถึงทำหยิ่งๆ ล่ะ? น่าจะตั้งแต่แรก"] },
+    { "customer_type_id": "accuse", "response_type": "negotiate", "mood_change":   2, "profit_change": -10, "messages": ["ส่วนลด? แค่ส่วนลด?", "ทำไมไม่คืนเต็มไปเลย? ไม่ยอมรับผิดเหรอ?"] },
+    { "customer_type_id": "accuse", "response_type": "refuse",    "mood_change": -25, "profit_change":   0, "messages": ["เห็นเลยว่าทำธุรกิจไม่เป็น!", "ลูกค้าถูกเสมอนะคะ ขอโทษหน่อย!"] },
+    { "customer_type_id": "accuse", "response_type": "deflect",   "mood_change": -10, "profit_change":   0, "messages": ["หัวหน้า? ทำไมต้องถาม?", "ตัดสินเองไม่ได้? นี่ตำแหน่งอะไรเนี่ย?"] },
+
+    { "customer_type_id": "flip", "response_type": "yield",     "mood_change":  28, "profit_change": -40, "messages": ["ขอบคุณค่ะพี่ 💕", "น่ารักมากเลยค่าาา หนูประทับใจมาก"] },
+    { "customer_type_id": "flip", "response_type": "negotiate", "mood_change":  12, "profit_change": -10, "messages": ["อืม ก็ได้ค่ะ ขอบคุณนะคะ 💕"] },
+    { "customer_type_id": "flip", "response_type": "refuse",    "mood_change": -30, "profit_change":   0, "messages": ["หา?? อะไรนะ?? ปฏิเสธหนูเหรอ??", "ขอ MANAGER เดี๋ยวนี้!! 🤬🤬"] },
+    { "customer_type_id": "flip", "response_type": "deflect",   "mood_change":   5, "profit_change":   0, "messages": ["อ๋อ รอได้ค่ะ ขอบคุณค่ะ 💕"] }
+  ],
+
+  "player_lines": {
+    "yield":     ["ได้ค่ะ เดี๋ยวจัดการให้เลยนะคะ 🙏", "โอเคค่ะ คืนเงิน/เปลี่ยนของให้เลย ขอโทษด้วยนะคะ", "ไม่เป็นไรค่ะ เดี๋ยวร้านรับผิดชอบให้เอง 🙏"],
+    "negotiate": ["ขอเสนอส่วนลดครั้งหน้า 30% + คู่มือให้นะคะ ✨", "เดี๋ยวส่งคูปอง 200 บาทไปให้ พร้อมแถมของเล็กๆ น้อยๆ", "ขอชดเชยเป็นส่วนลดและของแถมพิเศษให้แทนค่ะ"],
+    "refuse":    ["ขออภัยค่ะ ทางร้านมีนโยบายไม่รับคืนสินค้านะคะ 🙏", "ตามนโยบายร้านไม่สามารถดำเนินการตามที่ขอได้ค่ะ", "เรียนแจ้งว่าเคสนี้ทางร้านไม่สามารถทำได้ค่ะ"],
+    "deflect":   ["เดี๋ยวสอบถามหัวหน้าทีมให้ก่อนนะคะ รอสักครู่ค่ะ 🙏", "ขอเช็คข้อมูลกับฝ่ายที่เกี่ยวข้องก่อนนะคะ", "ขอเวลาสักครู่ ตรวจสอบเคสให้นะคะ ⏱"]
+  }
+}

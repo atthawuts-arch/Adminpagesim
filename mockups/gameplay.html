@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แอดมินซิม - Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800;900&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fb-blue: #0084FF;
+  --fb-blue-grad-1: #0099FF;
+  --fb-blue-grad-2: #0066CC;
+  --fb-grey-bubble: #E4E6EB;
+  --fb-text: #050505;
+  --fb-secondary: #65676B;
+  --fb-border: #DCDFE4;
+  --danger: #FA383E;
+  --warning: #FF9F1C;
+  --success: #31A24C;
+  --gold: #FFD60A;
+  --purple: #9B59B6;
+  --bg-1: #fef3e7;
+  --bg-2: #ffdcb3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, #ffd6a5 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, #ffadad 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #fdffb6 0%, transparent 70%),
+    linear-gradient(135deg, #fff4e6 0%, #ffe0b3 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  color: var(--fb-text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Title */
+.game-title {
+  text-align: center;
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.game-title h1 {
+  font-family: 'Kanit', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff9f1c 50%, #ffd60a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.08));
+  line-height: 1;
+}
+
+.game-title .sub {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: #444;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.game-title .pill {
+  display: inline-block;
+  background: #1c1e21;
+  color: #ffd60a;
+  font-family: 'Kanit', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* Phone Frame */
+.frame {
+  width: 100%;
+  max-width: 380px;
+  background: #000;
+  border-radius: 38px;
+  padding: 8px;
+  box-shadow:
+    0 30px 60px -10px rgba(0,0,0,0.3),
+    0 18px 36px -18px rgba(0,0,0,0.3),
+    inset 0 0 0 2px #2a2a2a;
+  position: relative;
+  z-index: 1;
+}
+
+.screen {
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Notch */
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 22px;
+  background: #000;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  z-index: 50;
+}
+
+/* Game HUD */
+.hud {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  padding: 28px 14px 12px;
+  position: relative;
+}
+
+.hud::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ff9f1c, transparent);
+}
+
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.shop-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+}
+
+.shop-badge .ico {
+  background: #ff9f1c;
+  color: #1a1a2e;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.scenario-tag {
+  background: rgba(255,77,109,0.2);
+  color: #ff6b8a;
+  border: 1px solid rgba(255,77,109,0.4);
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.hud-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.timer-box {
+  text-align: center;
+}
+
+.timer-label {
+  font-family: 'Kanit', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin-bottom: -2px;
+}
+
+.timer {
+  font-family: 'Kanit', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: #ff9f1c;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(255,159,28,0.5);
+}
+
+.meters {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.meter {
+  font-family: 'Kanit', sans-serif;
+}
+
+.meter-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.meter-label .name {
+  opacity: 0.85;
+}
+
+.meter-label .val {
+  font-weight: 700;
+}
+
+.meter-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.meter-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.mood-fill { background: linear-gradient(90deg, #fa383e, #ff9f1c); width: 22%; }
+.profit-fill { background: linear-gradient(90deg, #31a24c, #5dd968); width: 100%; }
+.score-fill { background: linear-gradient(90deg, #ffd60a, #ff9f1c); width: 14%; }
+
+/* FB Header */
+.fb-header {
+  background: white;
+  border-bottom: 1px solid var(--fb-border);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.back {
+  color: var(--fb-blue);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffafcc 0%, #ff6b9d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.active-dot {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 11px;
+  height: 11px;
+  background: #31a24c;
+  border-radius: 50%;
+  border: 2.5px solid white;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-info .name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--fb-text);
+}
+
+.user-info .status {
+  font-size: 11px;
+  color: var(--fb-secondary);
+}
+
+.fb-icons {
+  display: flex;
+  gap: 16px;
+  color: var(--fb-blue);
+  font-size: 18px;
+}
+
+/* Chat */
+.chat {
+  background: white;
+  height: 290px;
+  overflow-y: auto;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat::-webkit-scrollbar { width: 0; }
+
+.timestamp {
+  text-align: center;
+  font-size: 11px;
+  color: var(--fb-secondary);
+  margin: 6px 0 10px;
+  font-weight: 600;
+}
+
+.msg-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  align-items: flex-end;
+}
+
+.msg-row.out {
+  justify-content: flex-end;
+}
+
+.msg-avatar-sm {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffafcc 0%, #ff6b9d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 78%;
+}
+
+.msg-row.out .bubbles { align-items: flex-end; }
+
+.bubble {
+  padding: 8px 13px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: 'Sarabun', sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.bubble.in {
+  background: var(--fb-grey-bubble);
+  color: var(--fb-text);
+}
+
+.bubble.in:not(:last-child) { border-bottom-left-radius: 4px; }
+.bubble.in + .bubble.in { border-top-left-radius: 4px; }
+
+.bubble.out {
+  background: linear-gradient(135deg, var(--fb-blue-grad-1) 0%, var(--fb-blue-grad-2) 100%);
+  color: white;
+}
+
+.bubble.out:not(:last-child) { border-bottom-right-radius: 4px; }
+.bubble.out + .bubble.out { border-top-right-radius: 4px; }
+
+.seen-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+
+.seen-row .seen-avatar {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffafcc 0%, #ff6b9d 100%);
+  font-size: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Typing indicator */
+.typing-bubble {
+  background: var(--fb-grey-bubble);
+  padding: 11px 14px;
+  border-radius: 18px;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: #8a8d91;
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Response Options */
+.responses {
+  background: #f7f8fa;
+  border-top: 1px solid var(--fb-border);
+  padding: 10px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.resp-header .label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fb-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.resp-header .hint {
+  font-size: 10px;
+  color: var(--fb-secondary);
+  background: #e4e6eb;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.btn {
+  background: white;
+  border: 1.5px solid var(--fb-border);
+  border-radius: 14px;
+  padding: 9px 11px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Sarabun', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.btn.b1::before { background: linear-gradient(180deg, #31a24c, #5dd968); }
+.btn.b2::before { background: linear-gradient(180deg, var(--fb-blue), var(--fb-blue-grad-2)); }
+.btn.b3::before { background: linear-gradient(180deg, #ff9f1c, #ff6b00); }
+.btn.b4::before { background: linear-gradient(180deg, #9b59b6, #6c3483); }
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.btn.b1:hover { border-color: #31a24c; }
+.btn.b2:hover { border-color: var(--fb-blue); }
+.btn.b3:hover { border-color: #ff9f1c; }
+.btn.b4:hover { border-color: #9b59b6; }
+
+.btn-content {
+  flex: 1;
+  padding-left: 6px;
+}
+
+.btn-tag {
+  font-family: 'Kanit', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.btn.b1 .btn-tag { color: #31a24c; }
+.btn.b2 .btn-tag { color: var(--fb-blue); }
+.btn.b3 .btn-tag { color: #ff9f1c; }
+.btn.b4 .btn-tag { color: #9b59b6; }
+
+.btn-text {
+  font-size: 12.5px;
+  color: var(--fb-text);
+  line-height: 1.35;
+}
+
+.btn-fx {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  align-items: flex-end;
+}
+
+.fx-good { color: #31a24c; }
+.fx-bad { color: var(--danger); }
+.fx-mid { color: var(--fb-secondary); }
+.fx-warn { color: #ff9f1c; }
+
+/* Footer */
+.foot {
+  font-family: 'Kanit', sans-serif;
+  font-size: 11px;
+  color: #555;
+  margin-top: 18px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.foot .combo {
+  background: #1c1e21;
+  color: #ffd60a;
+  padding: 2px 9px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 10px;
+  margin: 0 3px;
+}
+
+/* Decorative elements */
+.deco {
+  position: absolute;
+  z-index: 0;
+  font-size: 60px;
+  opacity: 0.15;
+}
+
+.deco-1 { top: 8%; left: 5%; transform: rotate(-15deg); }
+.deco-2 { top: 15%; right: 8%; transform: rotate(20deg); }
+.deco-3 { bottom: 18%; left: 6%; transform: rotate(10deg); }
+.deco-4 { bottom: 10%; right: 5%; transform: rotate(-12deg); }
+
+@media (max-width: 400px) {
+  .game-title h1 { font-size: 32px; }
+  .deco { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deco deco-1">💬</div>
+<div class="deco deco-2">😤</div>
+<div class="deco deco-3">💸</div>
+<div class="deco deco-4">😭</div>
+
+<div class="game-title">
+  <h1>แอดมินซิม</h1>
+  <div class="sub">Admin Simulator</div>
+  <div class="pill">⏱ 3 นาที · 1 ลูกค้า · เอาตัวให้รอด</div>
+</div>
+
+<div class="frame">
+  <div class="screen">
+    <div class="notch"></div>
+
+    <!-- Game HUD -->
+    <div class="hud">
+      <div class="hud-top">
+        <div class="shop-badge">
+          <span class="ico">G</span>
+          <span>ร้าน Glow Up Cream</span>
+        </div>
+        <div class="scenario-tag">🎭 สายดราม่า</div>
+      </div>
+      <div class="hud-main">
+        <div class="timer-box">
+          <div class="timer-label">เวลา</div>
+          <div class="timer">2:43</div>
+        </div>
+        <div class="meters">
+          <div class="meter">
+            <div class="meter-label">
+              <span class="name">😡 มู้ดลูกค้า</span>
+              <span class="val">22 / 100</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill mood-fill"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-label">
+              <span class="name">💰 กำไรร้าน</span>
+              <span class="val">100 / 100</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill profit-fill"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-label">
+              <span class="name">🏆 คะแนน</span>
+              <span class="val">140</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill score-fill"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FB Messenger Header -->
+    <div class="fb-header">
+      <div class="back">‹</div>
+      <div class="avatar">
+        🥺
+        <div class="active-dot"></div>
+      </div>
+      <div class="user-info">
+        <div class="name">น้องนุ่น ค่ะะ 🎀</div>
+        <div class="status">กำลังใช้งานอยู่</div>
+      </div>
+      <div class="fb-icons">
+        <span>📞</span>
+        <span>📹</span>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat">
+      <div class="timestamp">วันนี้ 14:32</div>
+
+      <div class="msg-row">
+        <div class="msg-avatar-sm">🥺</div>
+        <div class="bubbles">
+          <div class="bubble in">พี่ค่าาาาา 😭😭😭</div>
+          <div class="bubble in">หนูซื้อครีมไป 3 หลอด ใช้มา 3 วันแล้วไม่ขาวขึ้นเลยค่าาาา</div>
+          <div class="bubble in">หน้าหนูยังดำเหมือนเดิม ผิดหวังมากกก หนูเป็นแฟนคลับร้านพี่มาตั้งนานน 😭</div>
+        </div>
+      </div>
+
+      <div class="msg-row out">
+        <div class="bubbles">
+          <div class="bubble out">สวัสดีค่ะคุณลูกค้า ครีมต้องใช้ต่อเนื่อง 4-6 สัปดาห์นะคะ 🙏</div>
+        </div>
+      </div>
+      <div class="seen-row">
+        <div class="seen-avatar">🥺</div>
+      </div>
+
+      <div class="msg-row">
+        <div class="msg-avatar-sm">🥺</div>
+        <div class="bubbles">
+          <div class="bubble in">โหหห พี่ค่ะ หนูซื้อไป 1,500 บาท นะคะ 😭💔</div>
+          <div class="bubble in">หนูจะคืนค่ะ ทนใช้ต่อไม่ไหวแล้วววว 😭😭</div>
+        </div>
+      </div>
+
+      <div class="msg-row">
+        <div class="msg-avatar-sm">🥺</div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Response Options -->
+    <div class="responses">
+      <div class="resp-header">
+        <span class="label">เลือกคำตอบ</span>
+        <span class="hint">tap ↓</span>
+      </div>
+
+      <button class="btn b1">
+        <div class="btn-content">
+          <div class="btn-tag">ยอมทุกอย่าง</div>
+          <div class="btn-text">"ได้ค่ะ เดี๋ยวคืนเงินเต็มจำนวนเลยนะคะ 🙏"</div>
+        </div>
+        <div class="btn-fx">
+          <span class="fx-good">😊 +30</span>
+          <span class="fx-bad">💰 −40</span>
+        </div>
+      </button>
+
+      <button class="btn b2">
+        <div class="btn-content">
+          <div class="btn-tag">เจรจาฉลาด</div>
+          <div class="btn-text">"ขอเสนอส่วนลด 30% ครั้งหน้า + คู่มือใช้ครีมให้ค่ะ ✨"</div>
+        </div>
+        <div class="btn-fx">
+          <span class="fx-good">😊 +15</span>
+          <span class="fx-bad">💰 −10</span>
+        </div>
+      </button>
+
+      <button class="btn b3">
+        <div class="btn-content">
+          <div class="btn-tag">ปฏิเสธสุภาพ</div>
+          <div class="btn-text">"ขออภัยค่ะ ทางร้านมีนโยบายไม่รับคืนสินค้าเปิดใช้แล้ว"</div>
+        </div>
+        <div class="btn-fx">
+          <span class="fx-bad">😊 −10</span>
+          <span class="fx-mid">💰 0</span>
+        </div>
+      </button>
+
+      <button class="btn b4">
+        <div class="btn-content">
+          <div class="btn-tag">ปั่น / โยกย้าย</div>
+          <div class="btn-text">"เดี๋ยวแจ้งหัวหน้าทีมตรวจสอบให้ก่อนนะคะ 🙏 รอสักครู่"</div>
+        </div>
+        <div class="btn-fx">
+          <span class="fx-mid">😊 0</span>
+          <span class="fx-warn">⏱ ซื้อเวลา</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  🎲 สุ่ม <span class="combo">7 ร้าน</span> × <span class="combo">7 สายลูกค้า</span> = 49 คอมโบ
+</div>
+
+</body>
+</html>
