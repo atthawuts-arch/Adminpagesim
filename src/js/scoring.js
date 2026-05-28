@@ -69,9 +69,23 @@ export function applyReaction(state, reaction, responseType, difficulty) {
  * @param {object} stats - { mood, profit, timeLeft, duration }
  * @param {'win'|'lose'|'timeout'} result
  * @param {object} difficulty
+ *
+ * Time factor model:
+ *   WIN:     0.5 + 0.5 × (timeLeft/duration)   range 0.5–1.0
+ *            (WIN always gets ≥ half credit; speed adds up to +50% bonus.
+ *            Avoids punishing buzzer-beater wins down to ~0.)
+ *   TIMEOUT: 1.0  (RESULT_MUL=0.6 already encodes the timeout penalty —
+ *            don't double-punish via time_pct=0.)
+ *   LOSE:    1.0  (mood=0 zeroes the base naturally, so irrelevant.)
  */
 export function calcFinalScore(stats, result, difficulty) {
-  const timePct = clamp(stats.timeLeft / stats.duration, 0, 1);
+  let timePct;
+  if (result === 'win') {
+    const ratio = clamp(stats.timeLeft / stats.duration, 0, 1);
+    timePct = 0.5 + 0.5 * ratio;
+  } else {
+    timePct = 1;
+  }
   const base = stats.mood * stats.profit * timePct;
   const total = base * difficulty.scoreMul * RESULT_MUL[result];
   return Math.round(total);
