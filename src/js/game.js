@@ -315,20 +315,27 @@ function flagLLMDegraded() {
 }
 
 /**
- * Best-effort classifier for typed messages when no LLM is available.
- * Returns one of yield/negotiate/refuse/deflect based on keyword heuristics.
+ * Best-effort classifier for typed messages when no LLM is available
+ * (and used to pre-tag intent for the hybrid safety net).
+ *
+ * Returns one of yield/negotiate/refuse/deflect.
+ * Defaults to deflect for ambiguous messages (asking for info, friendly
+ * greeting, etc.) — previously defaulted to negotiate which made
+ * customers respond to non-existent discount offers.
  */
 function classifyTypedResponse(text) {
   const t = (text || '').toLowerCase();
-  // Yield signals
-  if (/(คืนเงิน|คืนเต็ม|รับผิดชอบ|ขอโทษ.*คืน|จัดการให้|ทำใหม่ให้ฟรี|ส่งใหม่ให้)/.test(t)) return 'yield';
-  // Negotiate signals
-  if (/(ส่วนลด|คูปอง|แถม|ลดให้|ชดเชย|ของขวัญ|ครั้งหน้า|gift)/.test(t)) return 'negotiate';
-  // Deflect signals
-  if (/(หัวหน้า|ตรวจสอบ|รอสักครู่|เช็คก่อน|สอบถาม|รอแป๊บ|รอแป๊ป)/.test(t)) return 'deflect';
-  // Default: refuse (most explicit "no" patterns)
-  if (/(ไม่|ขอ ?อภัย|ไม่สามารถ|ไม่รับ|นโยบาย)/.test(t)) return 'refuse';
-  return 'negotiate';
+  // Yield signals — admin actively takes responsibility / offers full remedy
+  if (/(คืนเงิน|คืนเต็ม|รับผิดชอบ|ขอโทษ.*คืน|จัดการให้|ทำใหม่ให้ฟรี|ส่งใหม่ให้|ดูแลให้|แก้ไขให้|เปลี่ยน(?:ของ|สินค้า)|เคลม)/.test(t)) return 'yield';
+  // Negotiate signals — partial compromise
+  if (/(ส่วนลด|คูปอง|แถม|ลดให้|ชดเชย|ของขวัญ|ครั้งหน้า|gift|voucher|sample|ของแถม)/.test(t)) return 'negotiate';
+  // Deflect signals — stalling, asking for info, transferring
+  if (/(หัวหน้า|ตรวจสอบ|รอสักครู่|เช็คก่อน|สอบถาม|รอแป๊บ|รอแป๊ป|รอแป๊|ปัญหาอะไร|ปัญหาตรงไหน|เกิดอะไร|รายละเอียด|บอกได้ไหม|เล่ามา|ขอเวลา)/.test(t)) return 'deflect';
+  // Refuse — explicit policy/no
+  if (/(ไม่ได้|ไม่ค่ะ|ขออภัย.*ไม่|ไม่สามารถ|ไม่รับ|นโยบาย.*ไม่|ตามนโยบาย|ไม่อยู่ใน)/.test(t)) return 'refuse';
+  // Ambiguous → deflect (neutral). Avoids wrongly triggering negotiate template
+  // when admin says something unclassifiable like "ลูกค้ามีปัญหาตรงไหนคะ".
+  return 'deflect';
 }
 
 function templateFallback(responseType) {

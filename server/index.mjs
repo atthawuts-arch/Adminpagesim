@@ -67,46 +67,29 @@ app.post('/api/llm/turn', async (req, res) => {
   }
 
   const systemPrompt = buildSystemPrompt(ctx, playerMessage);
-
   const start = Date.now();
-  let raw, llmResp;
-  try {
-    const r = await fetch(`${TYPHOON_BASE}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': `Bearer ${TYPHOON_KEY}`,
-      },
-      body: JSON.stringify({
-        model: TYPHOON_MODEL,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: playerMessage },
-        ],
-        temperature: 0.8,
-        max_tokens: 280,
-        // Many OpenAI-compatible servers honor this even when undocumented:
-        response_format: { type: 'json_object' },
-      }),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!r.ok) {
-      const errBody = await r.text().catch(() => '');
-      return res.status(502).json({ ok: false, reason: 'llm-upstream', error: `HTTP ${r.status}: ${errBody.slice(0, 200)}` });
+
+  // Call the model. On empty customer_reply we retry once with a stricter
+  // append because the most common Typhoon failure mode is dropping the
+  // reply field entirely, then the old hybrid would silently fall back to
+  // the static template and repeat identical text across turns.
+  let { sanitized, raw, error } = await callLLM(systemPrompt, playerMessage);
+  let retried = false;
+  if (!error && !sanitized.customer_reply) {
+    retried = true;
+    const stricter = systemPrompt +
+      '\n\n=== สำคัญ: รอบที่แล้วคุณลืมใส่ customer_reply — ครั้งนี้ต้องมีข้อความตอบกลับจริงในฟีลด์ customer_reply ห้ามว่าง ห้าม null ===';
+    const second = await callLLM(stricter, playerMessage);
+    if (!second.error && second.sanitized.customer_reply) {
+      sanitized = second.sanitized;
+      raw = second.raw;
     }
-    llmResp = await r.json();
-    raw = llmResp?.choices?.[0]?.message?.content || '';
-  } catch (err) {
-    return res.status(504).json({ ok: false, reason: 'llm-timeout', error: err.message });
+  }
+  if (error) {
+    return res.status(error.status || 504).json({ ok: false, reason: error.reason, error: error.message });
   }
 
-  const parsed = extractJSON(raw);
-  if (!parsed) {
-    return res.json({ ok: false, reason: 'llm-bad-json', error: 'could not parse JSON from LLM', raw: raw.slice(0, 400) });
-  }
-
-  const sanitized = sanitize(parsed);
-  const reconciled = reconcileWithIntent(sanitized, intent, templateReaction);
+  const reconciled = reconcileWithIntent(sanitized, intent, templateReaction, ctx.recent_replies);
   const elapsed = Date.now() - start;
 
   // Diagnostic logging — visible via `railway logs`
@@ -114,7 +97,8 @@ app.post('/api/llm/turn', async (req, res) => {
   const ovStr = (ov.mood || ov.profit || ov.reply)
     ? ` [override: ${[ov.mood && 'mood', ov.profit && 'profit', ov.reply && 'reply'].filter(Boolean).join(',')}]`
     : '';
-  console.log(`[turn] intent=${intent || '?'} llm(${sanitized.mood_change ?? '?'},${sanitized.profit_change ?? '?'}) → final(${reconciled.mood_change},${reconciled.profit_change}) ${elapsed}ms${ovStr}`);
+  const retryStr = retried ? ' [retry]' : '';
+  console.log(`[turn] intent=${intent || '?'} llm(${sanitized.mood_change ?? '?'},${sanitized.profit_change ?? '?'}) → final(${reconciled.mood_change},${reconciled.profit_change}) ${elapsed}ms${ovStr}${retryStr}`);
 
   return res.json({
     ok: true,
@@ -245,7 +229,11 @@ function buildSystemPrompt(ctx, playerMessage) {
     `   • ปั่น:   ${RULES_BY_INTENT.deflect.profit}`,
     '',
     '3) creativity_bonus (0-20): empathy + แก้ปัญหาฉลาด',
-    '4) customer_reply: 1-3 ประโยค ในบุคลิก ใช้ "ค่ะ/หนู" ห้าม null',
+    '4) customer_reply: 1-3 ประโยค ในบุคลิก ใช้ "ค่ะ/หนู" — *** ห้าม null/ว่าง เด็ดขาด ***',
+    '   • ต้องตอบสนองโดยตรงต่อสิ่งที่แอดมินเพิ่งพูด',
+    '   • ห้ามพูดถึงสิ่งที่แอดมินไม่ได้พูด (เช่น "ส่วนลด" ถ้าแอดมินไม่ได้เสนอส่วนลด)',
+    '   • ถ้าแอดมินถามคำถาม → ตอบคำถาม (อาจตอบเชิงงอนก็ได้ตามบุคลิก) ห้ามด่าเรื่องที่ไม่เกี่ยว',
+    '   • อ่านข้อความ admin ให้ละเอียดก่อนตอบ',
     '',
     '=== ตัวอย่าง (ทำความเข้าใจ format อย่าคัดลอกข้อความ) ===',
     ...FEW_SHOTS.flatMap(ex => [
@@ -259,6 +247,43 @@ function buildSystemPrompt(ctx, playerMessage) {
     `[แอดมิน] "${playerMessage}"`,
     `[ผล] ตอบเป็น JSON object เท่านั้น มี 4 keys: mood_change, profit_change, creativity_bonus, customer_reply`,
   ].join('\n');
+}
+
+async function callLLM(systemPrompt, playerMessage) {
+  let raw = '';
+  try {
+    const r = await fetch(`${TYPHOON_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${TYPHOON_KEY}`,
+      },
+      body: JSON.stringify({
+        model: TYPHOON_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: playerMessage },
+        ],
+        temperature: 0.85,
+        max_tokens: 320,
+        response_format: { type: 'json_object' },
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!r.ok) {
+      const errBody = await r.text().catch(() => '');
+      return { error: { status: 502, reason: 'llm-upstream', message: `HTTP ${r.status}: ${errBody.slice(0, 200)}` } };
+    }
+    const body = await r.json();
+    raw = body?.choices?.[0]?.message?.content || '';
+  } catch (err) {
+    return { error: { status: 504, reason: 'llm-timeout', message: err.message } };
+  }
+  const parsed = extractJSON(raw);
+  if (!parsed) {
+    return { error: { status: 200, reason: 'llm-bad-json', message: 'JSON parse failed' }, raw };
+  }
+  return { sanitized: sanitize(parsed), raw };
 }
 
 function extractJSON(text) {
@@ -292,7 +317,7 @@ function splitReply(text) {
   return [text.slice(0, cut).trim(), text.slice(cut).trim()].filter(Boolean);
 }
 
-function reconcileWithIntent(llmOut, intent, templateReaction) {
+function reconcileWithIntent(llmOut, intent, templateReaction, recentReplies = []) {
   const out = {
     mood_change: llmOut.mood_change,
     profit_change: llmOut.profit_change,
@@ -333,9 +358,28 @@ function reconcileWithIntent(llmOut, intent, templateReaction) {
     }
   }
   if (!out.customer_reply) {
-    out.customer_reply = tplMessages.join(' ');
+    const tplJoined = tplMessages.join(' ');
+    // If we already used this exact template recently, paraphrase it slightly
+    // so the player doesn't see the same canned line back-to-back.
+    const recentTexts = (Array.isArray(recentReplies) ? recentReplies : []).join(' ');
+    if (recentTexts.includes(tplMessages[0] || '__never__')) {
+      out.customer_reply = paraphraseTemplate(tplMessages);
+    } else {
+      out.customer_reply = tplJoined;
+    }
     out.overridden.reply = true;
   }
   out.messages = splitReply(out.customer_reply);
   return out;
+}
+
+// Light paraphrase so a recycled template doesn't read identical to last turn.
+// We don't have an LLM here (we're already in the failure path) — just shuffle
+// + add a transitional opener.
+function paraphraseTemplate(messages) {
+  if (!Array.isArray(messages) || messages.length === 0) return '...';
+  const openers = ['อืม...', 'แล้วนี่...', 'ก็คือ...', 'จริงๆ แล้ว...', 'หนูก็ยังคิดว่า...'];
+  const opener = openers[Math.floor(Math.random() * openers.length)];
+  const reversed = messages.slice().reverse(); // flip order
+  return `${opener} ${reversed.join(' ')}`;
 }
