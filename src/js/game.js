@@ -23,7 +23,7 @@ const state = {
   recentReplies: [],    // last N customer replies, sent to LLM as anti-repetition context
 };
 
-const MAX_RECENT_REPLIES = 3;
+const MAX_RECENT_REPLIES = 5;
 
 let onFinish = null;
 const $ = (id) => document.getElementById(id);
@@ -69,7 +69,16 @@ export async function startMatch(diffKey) {
   chat.clearChat();
   updateHUD();
 
-  await chat.addCustomerBubbles(state.combo.opening.messages, state.combo.customerType.avatar_emoji);
+  // Pick a random "I bought X from you" preamble so the opening isn't
+  // jarring — drops the player into a story rather than mid-complaint.
+  const preambles = state.combo.situation.preambles || [];
+  const preamble = preambles.length
+    ? preambles[Math.floor(Math.random() * preambles.length)]
+    : null;
+  const openingMessages = preamble
+    ? [preamble, ...state.combo.opening.messages]
+    : state.combo.opening.messages;
+  await chat.addCustomerBubbles(openingMessages, state.combo.customerType.avatar_emoji);
   state.busy = false;
 
   // start timer only after the opening renders

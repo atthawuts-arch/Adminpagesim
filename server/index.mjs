@@ -173,15 +173,45 @@ const RULES_BY_INTENT = {
 
 function buildAntiRepeatBlock(recentReplies) {
   if (!Array.isArray(recentReplies) || recentReplies.length === 0) return [];
+  // Extract repeated short tokens that the model is likely echoing
+  // (e.g. "หนูจน", "หนูร้องไห้", "ขอ MANAGER"). Surface them as a
+  // banned-keyword list — much more effective than a generic "don't repeat".
+  const tokens = extractRepeatedTokens(recentReplies);
+  const bannedLine = tokens.length
+    ? `*** คำที่ห้ามใช้ในรอบนี้ (ใช้ไปแล้ว ${tokens.length} คำ): ${tokens.map(t => `"${t}"`).join(', ')} ***`
+    : '';
   return [
-    '=== ห้ามตอบซ้ำ (คุณเพิ่งพูดสิ่งเหล่านี้ไปแล้ว) ===',
-    ...recentReplies.map((r, i) => `[เมื่อกี้ #${recentReplies.length - i}] "${r}"`),
-    'กฎ:',
-    '- ห้ามพูดสำนวนเดิม คำคีย์เดิม หรือธีมเดิม (เช่น "หนูจน", "หนูร้องไห้")',
-    '- ต้องตอบสนองต่อสิ่งที่แอดมินเพิ่งพูด ไม่ใช่ลูปกลับมา persona เริ่มต้น',
-    '- ถ้ามู้ดสูงขึ้นแล้ว (>50) ให้ลดการบ่นลง พูดเชิงบวกมากขึ้น',
+    '=== สิ่งที่คุณเพิ่งพูดไปแล้ว — ห้ามพูดซ้ำ ===',
+    ...recentReplies.map((r, i) => `[ครั้งที่ ${recentReplies.length - i} ก่อนหน้านี้] "${r}"`),
     '',
-  ];
+    'กฎห้ามซ้ำ (เด็ดขาด):',
+    '- ห้ามใช้สำนวน คำคีย์ หรือธีมเดิมที่พูดไปแล้ว',
+    '- ต้องตอบสนองต่อข้อความใหม่ของแอดมินโดยตรง ไม่ใช่วน persona เริ่มต้น',
+    '- ถ้ามู้ด > 50 ลดการบ่น พูดเชิงบวกขึ้น',
+    '- ถ้ามู้ด > 70 ให้ขอบคุณ/ชื่นชม มากกว่าบ่น',
+    bannedLine,
+    '',
+  ].filter(Boolean);
+}
+
+// Find short Thai tokens that recur across recent replies — these are the
+// phrases the model is echoing and the player notices as repetition.
+function extractRepeatedTokens(replies) {
+  const counts = new Map();
+  for (const reply of replies) {
+    // Word-ish chunks: Thai short words 2–8 chars, separated by space/punct
+    const chunks = reply.match(/[฀-๿a-zA-Z]{2,8}/g) || [];
+    for (const c of chunks) {
+      counts.set(c, (counts.get(c) || 0) + 1);
+    }
+  }
+  // Pick tokens that appear in at least 2 replies and aren't generic stopwords
+  const stopwords = new Set(['ค่ะ', 'นะ', 'นะคะ', 'พี่', 'หนู', 'ค่ะะ', 'แต่', 'ที่', 'แล้ว', 'มาก', 'ครับ', 'จะ', 'จัง', 'มา', 'ก็', 'ได้', 'อยู่', 'เลย', 'มี', 'ให้', 'ของ', 'เป็น', 'ไป', 'รับ', 'อ่ะ', 'อะ', 'จริงๆ']);
+  return [...counts.entries()]
+    .filter(([k, v]) => v >= 2 && !stopwords.has(k))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([k]) => k);
 }
 
 function buildSystemPrompt(ctx, playerMessage) {
