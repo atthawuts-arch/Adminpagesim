@@ -1,0 +1,22 @@
+{
+  "ctx": {
+    "shop_name": "ครัวพี่หญิง",
+    "category": "อาหาร",
+    "complaint": "กินไปครึ่งกล่องแล้วบอกไม่อร่อย",
+    "policy": "อาหารปรุงสด ไม่รับคืน",
+    "context_for_llm": "ร้านอาหารเดลิเวอรี่",
+    "customer_type_name": "ดราม่า",
+    "tone_description": "ใช้อิโมจิเยอะ ลากเสียง",
+    "customer_name": "น้องบีม",
+    "mood": 40,
+    "profit": 80,
+    "turns": 1
+  },
+  "playerMessage": "เดี๋ยวเช็คกับครัวให้ก่อนนะคะ",
+  "intent": "deflect",
+  "templateReaction": {
+    "mood_change": 5,
+    "profit_change": 0,
+    "messages": ["ค่ะะ หนูรอนะคะ"]
+  }
+}

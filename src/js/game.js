@@ -20,7 +20,10 @@ const state = {
   usedTyping: false,    // for Normal mode scoring bonus
   creativityBonus: 0,   // accumulated across turns from LLM
   llmActiveThisMatch: false,
+  recentReplies: [],    // last N customer replies, sent to LLM as anti-repetition context
 };
+
+const MAX_RECENT_REPLIES = 3;
 
 let onFinish = null;
 const $ = (id) => document.getElementById(id);
@@ -44,6 +47,7 @@ export async function startMatch(diffKey) {
   state.finished = false;
   state.usedTyping = false;
   state.creativityBonus = 0;
+  state.recentReplies = [];
 
   // Decide whether to attempt LLM this match (normal/hardcore). Probe Ollama
   // up-front so HUD pill is accurate from the first turn.
@@ -215,6 +219,15 @@ async function handleResponse(responseType, ctx) {
 
   await chat.addCustomerBubbles(reaction.messages, state.combo.customerType.avatar_emoji);
 
+  // Track the customer's reply for anti-repetition in the next LLM call
+  const replyJoined = (reaction.messages || []).join(' ').trim();
+  if (replyJoined) {
+    state.recentReplies.push(replyJoined);
+    if (state.recentReplies.length > MAX_RECENT_REPLIES) {
+      state.recentReplies.shift();
+    }
+  }
+
   if (state.mood >= 80) return endMatch('win');
   if (state.mood <= 0) return endMatch('lose');
 
@@ -255,6 +268,7 @@ async function getCustomerReaction(responseType, ctx, playerLine) {
       mood: state.mood,
       profit: state.profit,
       turns: state.turns,
+      recent_replies: state.recentReplies.slice(),
     };
     const out = await llm.generateReaction(llmCtx, playerLine, { intent, templateReaction });
     if (out.ok) {

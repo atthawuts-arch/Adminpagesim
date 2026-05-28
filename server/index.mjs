@@ -171,6 +171,19 @@ const RULES_BY_INTENT = {
   deflect:   { mood: '-5 ถึง 0',    profit: '0' },
 };
 
+function buildAntiRepeatBlock(recentReplies) {
+  if (!Array.isArray(recentReplies) || recentReplies.length === 0) return [];
+  return [
+    '=== ห้ามตอบซ้ำ (คุณเพิ่งพูดสิ่งเหล่านี้ไปแล้ว) ===',
+    ...recentReplies.map((r, i) => `[เมื่อกี้ #${recentReplies.length - i}] "${r}"`),
+    'กฎ:',
+    '- ห้ามพูดสำนวนเดิม คำคีย์เดิม หรือธีมเดิม (เช่น "หนูจน", "หนูร้องไห้")',
+    '- ต้องตอบสนองต่อสิ่งที่แอดมินเพิ่งพูด ไม่ใช่ลูปกลับมา persona เริ่มต้น',
+    '- ถ้ามู้ดสูงขึ้นแล้ว (>50) ให้ลดการบ่นลง พูดเชิงบวกมากขึ้น',
+    '',
+  ];
+}
+
 function buildSystemPrompt(ctx, playerMessage) {
   return [
     '=== บทบาท ===',
@@ -186,6 +199,7 @@ function buildSystemPrompt(ctx, playerMessage) {
     `มู้ดปัจจุบัน: ${ctx.mood}/100 (ยิ่งต่ำยิ่งโกรธ ยิ่งสูงยิ่งใจเย็น)`,
     `รอบที่: ${(ctx.turns ?? 0) + 1}`,
     '',
+    ...buildAntiRepeatBlock(ctx.recent_replies),
     '=== กติกาประเมิน ===',
     '1) mood_change (จำนวนเต็ม -35 ถึง +35) — *** ห้ามตอบ 0 ถ้าแอดมินทำอะไรชัดเจน ***',
     `   • ยอม (คืนเงิน/ทำใหม่ฟรี/ส่งของใหม่ฟรี):  ${RULES_BY_INTENT.yield.mood}`,
